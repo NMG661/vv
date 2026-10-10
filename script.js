@@ -12,6 +12,7 @@ const translations = {
   en: {
     metaDesc: "OptiCraft Heritage Developer Community — unofficial OptiCraft Heritage ports.",
     "btn-ports": "PORT LIST",
+    "btn-pak-tool": "ASSETS.PAK TOOL",
     "btn-about": "ABOUT US",
     "btn-back": "BACK",
     "controls": "<span>▲ ▼</span> SELECT &nbsp; <span>ENTER</span> OPEN &nbsp; <span>ESC</span> BACK",
@@ -54,6 +55,7 @@ const translations = {
   es: {
     metaDesc: "OptiCraft Heritage Developer Community — ports no oficiales de OptiCraft Heritage.",
     "btn-ports": "LISTA DE PORTS",
+    "btn-pak-tool": "HERRAMIENTA ASSETS.PAK",
     "btn-about": "SOBRE NOSOTROS",
     "btn-back": "VOLVER",
     "controls": "<span>▲ ▼</span> SELECCIONAR &nbsp; <span>ENTER</span> ABRIR &nbsp; <span>ESC</span> VOLVER",
