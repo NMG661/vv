@@ -653,46 +653,6 @@ button, a, input, select, textarea {
   word-break: break-all;
 }
 
-/* Guide Styles */
-.guide-card {
-  background: rgba(22, 22, 22, 0.85);
-  border: 2px solid #333;
-  padding: 16px 20px;
-  margin-bottom: 16px;
-}
-.guide-step {
-  display: flex;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-.guide-step:last-child { margin-bottom: 0; }
-.guide-num {
-  flex: 0 0 28px;
-  width: 28px;
-  height: 28px;
-  background: #003791;
-  color: #fff;
-  border: 2px solid #00225b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-}
-.guide-body {
-  flex: 1;
-  font-size: 13px;
-  line-height: 1.45;
-  color: #ddd;
-}
-.guide-body code {
-  background: #111;
-  border: 1px solid #444;
-  padding: 2px 6px;
-  color: #ffff77;
-  font-family: Consolas, monospace;
-}
-
 /* Bottom corner elements */
 .minecraft-version-text {
   position: fixed;

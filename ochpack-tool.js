@@ -48,7 +48,6 @@ const translations = {
     "tool-subtitle": "Convert, optimize, and build .ochpack texture packs for OptiCraft Heritage (PS2)",
     "tab-create": "📦 Build .ochpack",
     "tab-inspect": "🔍 Inspect & Edit .ochpack",
-    "tab-guide": "📖 PS2 Guide",
     "create-info-title": "Convert any Minecraft texture pack (.ZIP or folder) to .ochpack for PS2.",
     "create-info-desc": "Automatically cleans out incompatible Java .class files, sets up mod.info & pack.txt, and verifies PS2 texture resolution.",
     "create-dropzone-text": "Drag & drop your texture pack (.ZIP or folder) here, or tap to choose",
@@ -78,16 +77,6 @@ const translations = {
     "th-size": "Size",
     "th-action": "Action",
     "btn-export-zip": "📦 Download All as .ZIP",
-    "guide-title": "How to Install Texture Packs on PlayStation 2",
-    "guide-step1-title": "Prepare your USB Drive (FAT32):",
-    "guide-step1-desc": "Format your USB flash drive with the FAT32 file system (standard for PS2 homebrew). You can do this on PC or using an OTG adapter on Android.",
-    "guide-step2-title": "Copy your .ochpack file:",
-    "guide-step2-desc": "Place your generated .ochpack file into either of the following folders on your USB drive:",
-    "guide-or": "or",
-    "guide-step3-title": "Activate in OptiCraft Heritage:",
-    "guide-step3-desc": "Insert the USB drive into your PS2, launch OptiCraft Heritage, go to Options -> Texture Packs, select your pack, and enjoy!",
-    "guide-step4-title": "PS2 Memory & Performance Note:",
-    "guide-step4-desc": "The PlayStation 2 has 32MB of total system RAM. 16x textures (256x256 terrain.png) offer the smoothest performance and zero lag. 32x textures work, while 64x+ textures are automatically downscaled by the game engine to 256px to prevent out-of-memory crashes.",
     "status-ready": "Ready.",
     "log-title": "Activity Log (Console):",
     "btn-copy-log": "Copy",
@@ -101,7 +90,6 @@ const translations = {
     "tool-subtitle": "Convierte, optimiza y empaqueta Texture Packs para OptiCraft Heritage (PS2)",
     "tab-create": "📦 Armar .ochpack",
     "tab-inspect": "🔍 Inspeccionar y Editar .ochpack",
-    "tab-guide": "📖 Guía para PS2",
     "create-info-title": "Convierte cualquier Texture Pack de Minecraft (.ZIP o carpeta) a .ochpack para PS2.",
     "create-info-desc": "Limpia automáticamente archivos .class de Java incompatibles, genera mod.info y pack.txt, y verifica la resolución para PS2.",
     "create-dropzone-text": "Arrastra y suelta tu Texture Pack (.ZIP o carpeta) aquí, o pulsa para elegirlo",
@@ -131,21 +119,11 @@ const translations = {
     "th-size": "Tamaño",
     "th-action": "Acción",
     "btn-export-zip": "📦 Descargar Todo como .ZIP",
-    "guide-title": "Cómo Instalar Texture Packs en PlayStation 2",
-    "guide-step1-title": "Prepara tu Pendrive USB (FAT32):",
-    "guide-step1-desc": "Formatea tu memoria USB en formato FAT32 (estándar para Homebrew de PS2). Puedes hacerlo en PC o desde tu teléfono con un adaptador OTG.",
-    "guide-step2-title": "Copia tu archivo .ochpack:",
-    "guide-step2-desc": "Coloca el archivo .ochpack generado en cualquiera de las siguientes carpetas de tu USB:",
-    "guide-or": "o en",
-    "guide-step3-title": "Actívalo en OptiCraft Heritage:",
-    "guide-step3-desc": "Conecta el USB en tu PS2, abre OptiCraft Heritage, entra a Opciones -> Texture Packs, ¡selecciona tu pack y juega!",
-    "guide-step4-title": "Memoria y Rendimiento en PS2:",
-    "guide-step4-desc": "La PlayStation 2 cuenta con 32MB de RAM total. Texturas en 16x (256x256 terrain.png) brindan máxima fluidez. Texturas en 32x funcionan bien, mientras que 64x o superiores son auto-escaladas a 256px por el motor para evitar fallos de memoria.",
     "status-ready": "Listo.",
     "log-title": "Registro de Actividad (Consola):",
     "btn-copy-log": "Copiar",
     "btn-clear-log": "Limpiar",
-    "footer-disclaimer": "Desarrollado por OptiCraft Heritage Developer Community.<br>No afiliado a Optiprojects."
+    "footer-disclaimer": "Desarrollado por OptiCraft Heritage Developer Community.<br>Not affiliated with Optiprojects."
   }
 };
 
@@ -195,10 +173,8 @@ let inspectZipInstance = null;
 const tabs = {
   tabBtnCreate: document.getElementById('tabBtnCreate'),
   tabBtnInspect: document.getElementById('tabBtnInspect'),
-  tabBtnGuide: document.getElementById('tabBtnGuide'),
   tabCreate: document.getElementById('tabCreate'),
-  tabInspect: document.getElementById('tabInspect'),
-  tabGuide: document.getElementById('tabGuide')
+  tabInspect: document.getElementById('tabInspect')
 };
 
 const createDropzone = document.getElementById('createDropzone');
@@ -282,7 +258,6 @@ function switchTab(targetTabId) {
 
 tabs.tabBtnCreate.addEventListener('click', () => switchTab('tabCreate'));
 tabs.tabBtnInspect.addEventListener('click', () => switchTab('tabInspect'));
-tabs.tabBtnGuide.addEventListener('click', () => switchTab('tabGuide'));
 
 // --- PS2 Preview Updating ---
 function updateLivePreview() {
