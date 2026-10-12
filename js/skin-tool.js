@@ -11,6 +11,7 @@ const translations = {
     "back-portal": "BACK TO PORTAL",
     "goto-pak-tool": "ASSETS.PAK TOOL",
     "goto-ochpack-tool": "OCHPACK (PS2)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "3DS SKIN CONVERTER",
     "tool-subtitle": "Convert modern Minecraft skins (64x64) to retro format (64x32), flip for Nintendo 3DS hardware, and preview live.",
     
@@ -93,7 +94,8 @@ const translations = {
   es: {
     "back-portal": "VOLVER AL PORTAL",
     "goto-pak-tool": "HERRAMIENTA ASSETS.PAK",
-    "goto-ochpack-tool": "CREADOR OCHPACK (PS2)",
+    "goto-ochpack-tool": "OCHPACK (PS2)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "CONVERTIDOR DE SKINS (3DS)",
     "tool-subtitle": "Convierte cualquier skin moderna (64x64) a formato retro (64x32), voltéala para el hardware de 3DS y previsualízala en tiempo real.",
 

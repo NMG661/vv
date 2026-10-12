@@ -59,6 +59,7 @@ const translations = {
     "back-portal": "BACK TO PORTAL",
     "goto-ochpack": "OCHPACK (PS2)",
     "goto-skin-tool": "SKIN CONVERTER (3DS)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "OPTICRAFT HERITAGE - ASSETS.PAK TOOL",
     "tool-subtitle": "Resource Packer & Unpacker for PS2, PSP, Wii and PC",
     "tab-pack": "📦 Pack to .pak",
@@ -99,6 +100,7 @@ const translations = {
     "back-portal": "VOLVER AL PORTAL",
     "goto-ochpack": "OCHPACK (PS2)",
     "goto-skin-tool": "CONVERTIDOR SKINS (3DS)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "OPTICRAFT HERITAGE - GESTOR DE ASSETS.PAK",
     "tool-subtitle": "Empaquetador y Desempaquetador de recursos para PS2, PSP, Wii y PC",
     "tab-pack": "📦 Empaquetar a .pak",
@@ -255,6 +257,93 @@ btnClearLog.addEventListener('click', () => {
   logTerminal.textContent = '';
   setProgress(0, 0, currentLang === 'es' ? 'Log limpiado.' : 'Log cleared.');
 });
+
+// --- MCPK assembly (shared by the Pack tab and the 3DS Convert tab) ---
+// Mirrors scripts/pak_flip_mc3ds.py write_pak(): NUL-terminated UTF-8 names
+// blob, FNV-1a 32 hash of the lower-cased key, entries sorted by (hash, key),
+// data aligned to DATA_ALIGN (64) bytes.
+async function assembleMcpk(files, onProgress) {
+  const encoder = new TextEncoder();
+  const namesChunks = [];
+  let namesLen = 0;
+  const records = [];
+
+  for (const f of files) {
+    const encodedKey = encoder.encode(f.path + '\0');
+    const nameOffset = namesLen;
+    namesChunks.push(encodedKey);
+    namesLen += encodedKey.length;
+
+    records.push({
+      hash: fnv1a32(f.path.toLowerCase()),
+      nameOffset,
+      dataOffset: 0,
+      size: f.data.length,
+      key: f.path,
+      data: f.data
+    });
+  }
+
+  // Sort by (hash, key)
+  records.sort((a, b) => {
+    if (a.hash !== b.hash) return a.hash < b.hash ? -1 : 1;
+    return a.key.localeCompare(b.key);
+  });
+
+  const tableOffset = HEADER_BYTES;
+  const namesOffset = tableOffset + records.length * ENTRY_BYTES;
+  const dataOffset = align(namesOffset + namesLen, DATA_ALIGN);
+
+  let cursor = dataOffset;
+  for (const r of records) {
+    r.dataOffset = cursor;
+    cursor = align(cursor + r.size, DATA_ALIGN);
+  }
+
+  const totalPakSize = align(cursor, DATA_ALIGN);
+  const outBytes = new Uint8Array(totalPakSize);
+  const view = new DataView(outBytes.buffer);
+
+  // Header
+  outBytes.set(MAGIC_BYTES, 0);
+  view.setUint32(4, VERSION, false);
+  view.setUint32(8, records.length, false);
+  view.setUint32(12, tableOffset, false);
+  view.setUint32(16, namesOffset, false);
+  view.setUint32(20, namesLen, false);
+  view.setUint32(24, DATA_ALIGN, false);
+  view.setUint32(28, 0, false);
+
+  // Table
+  let entryPos = tableOffset;
+  for (const r of records) {
+    view.setUint32(entryPos, r.hash, false);
+    view.setUint32(entryPos + 4, r.nameOffset, false);
+    view.setUint32(entryPos + 8, r.dataOffset, false);
+    view.setUint32(entryPos + 12, r.size, false);
+    entryPos += ENTRY_BYTES;
+  }
+
+  // Names blob
+  let namePos = namesOffset;
+  for (const chunk of namesChunks) {
+    outBytes.set(chunk, namePos);
+    namePos += chunk.length;
+  }
+
+  // File contents with progress
+  for (let i = 0; i < records.length; i++) {
+    const r = records[i];
+    outBytes.set(r.data, r.dataOffset);
+
+    if (onProgress && ((i + 1) % 50 === 0 || i === records.length - 1)) {
+      onProgress(i + 1, records.length, r.key, r.size);
+      await new Promise(res => setTimeout(res, 0)); // keep UI responsive
+    }
+  }
+
+  return outBytes;
+}
 
 // --- Tab 1: Packing Logic ---
 
@@ -460,95 +549,18 @@ btnStartPack.addEventListener('click', async () => {
     }
 
     log(currentLang === 'es' ? 'Generando tabla de nombres y hashes FNV1a...' : 'Generating names table and FNV1a hashes...');
-    const encoder = new TextEncoder();
-    const namesChunks = [];
-    let namesLen = 0;
-    const records = [];
-
-    for (const f of filtered) {
-      const key = f.path;
-      const encodedKey = encoder.encode(key + '\0');
-      const nameOffset = namesLen;
-      namesChunks.push(encodedKey);
-      namesLen += encodedKey.length;
-
-      records.push({
-        hash: fnv1a32(key.toLowerCase()),
-        nameOffset,
-        dataOffset: 0,
-        size: f.data.length,
-        key,
-        data: f.data
-      });
-    }
-
-    // Sort by (hash, key)
-    records.sort((a, b) => {
-      if (a.hash !== b.hash) return a.hash < b.hash ? -1 : 1;
-      return a.key.localeCompare(b.key);
+    const outBytes = await assembleMcpk(filtered, (i, total, key, size) => {
+      setProgress(i, total, `${currentLang === 'es' ? 'Empaquetando' : 'Packing'}: [${i}/${total}] ${key}`);
+      log(`[${i}/${total}] ${key} (${formatBytes(size)})`);
     });
-
-    const tableOffset = HEADER_BYTES;
-    const namesOffset = tableOffset + records.length * ENTRY_BYTES;
-    const dataOffset = align(namesOffset + namesLen, DATA_ALIGN);
-
-    let cursor = dataOffset;
-    for (const r of records) {
-      r.dataOffset = cursor;
-      cursor = align(cursor + r.size, DATA_ALIGN);
-    }
-
-    const totalPakSize = align(cursor, DATA_ALIGN);
-    log(`${currentLang === 'es' ? 'Tamaño estimado del archivo .pak' : 'Estimated .pak size'}: ${formatBytes(totalPakSize)}`);
-
-    const outBytes = new Uint8Array(totalPakSize);
-    const view = new DataView(outBytes.buffer);
-
-    // Header
-    outBytes.set(MAGIC_BYTES, 0);
-    view.setUint32(4, VERSION, false);
-    view.setUint32(8, records.length, false);
-    view.setUint32(12, tableOffset, false);
-    view.setUint32(16, namesOffset, false);
-    view.setUint32(20, namesLen, false);
-    view.setUint32(24, DATA_ALIGN, false);
-    view.setUint32(28, 0, false);
-
-    // Table
-    let entryPos = tableOffset;
-    for (const r of records) {
-      view.setUint32(entryPos, r.hash, false);
-      view.setUint32(entryPos + 4, r.nameOffset, false);
-      view.setUint32(entryPos + 8, r.dataOffset, false);
-      view.setUint32(entryPos + 12, r.size, false);
-      entryPos += ENTRY_BYTES;
-    }
-
-    // Names blob
-    let namePos = namesOffset;
-    for (const chunk of namesChunks) {
-      outBytes.set(chunk, namePos);
-      namePos += chunk.length;
-    }
-
-    // File contents with progress
-    for (let i = 0; i < records.length; i++) {
-      const r = records[i];
-      outBytes.set(r.data, r.dataOffset);
-
-      if ((i + 1) % 50 === 0 || i === records.length - 1) {
-        setProgress(i + 1, records.length, `${currentLang === 'es' ? 'Empaquetando' : 'Packing'}: [${i + 1}/${records.length}] ${r.key}`);
-        log(`[${i + 1}/${records.length}] ${r.key} (${formatBytes(r.size)})`);
-        await new Promise(r => setTimeout(r, 0)); // keep UI responsive
-      }
-    }
+    const totalPakSize = outBytes.length;
 
     const blob = new Blob([outBytes], { type: 'application/octet-stream' });
     downloadBlob(blob, outputName);
 
-    log(`\n[OK] ${currentLang === 'es' ? '¡Empaquetado exitoso!' : 'Packing completed!'} ${records.length} ${currentLang === 'es' ? 'archivos empaquetados en' : 'files packed into'} '${outputName}' (${formatBytes(totalPakSize)})`);
+    log(`\n[OK] ${currentLang === 'es' ? '¡Empaquetado exitoso!' : 'Packing completed!'} ${filtered.length} ${currentLang === 'es' ? 'archivos empaquetados en' : 'files packed into'} '${outputName}' (${formatBytes(totalPakSize)})`);
     setProgress(100, 100, currentLang === 'es' ? '¡Archivo .pak generado con éxito!' : '.pak file generated successfully!');
-    alert(currentLang === 'es' ? `¡Empaquetado completado!\nArchivos: ${records.length}\nTamaño: ${formatBytes(totalPakSize)}\nDescargando: ${outputName}` : `Packing completed!\nFiles: ${records.length}\nSize: ${formatBytes(totalPakSize)}\nDownloading: ${outputName}`);
+    alert(currentLang === 'es' ? `¡Empaquetado completado!\nArchivos: ${filtered.length}\nTamaño: ${formatBytes(totalPakSize)}\nDescargando: ${outputName}` : `Packing completed!\nFiles: ${filtered.length}\nSize: ${formatBytes(totalPakSize)}\nDownloading: ${outputName}`);
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
@@ -774,7 +786,7 @@ convertDropzone.addEventListener('drop', async (e) => {
   convertDropzone.classList.remove('dragover');
   if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
     loadedConvertFile = e.dataTransfer.files[0];
-    log(`[3DS CONVERT] Archivo seleccionado: ${loadedConvertFile.name}`);
+    log(`[3DS CONVERT] ${currentLang === 'es' ? 'Archivo seleccionado' : 'File selected'}: ${loadedConvertFile.name}`);
     alert(currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".`);
   }
 });
@@ -782,7 +794,7 @@ convertDropzone.addEventListener('drop', async (e) => {
 pakConvertInput.addEventListener('change', async (e) => {
   if (e.target.files && e.target.files.length > 0) {
     loadedConvertFile = e.target.files[0];
-    log(`[3DS CONVERT] Archivo seleccionado: ${loadedConvertFile.name}`);
+    log(`[3DS CONVERT] ${currentLang === 'es' ? 'Archivo seleccionado' : 'File selected'}: ${loadedConvertFile.name}`);
     alert(currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".`);
     pakConvertInput.value = '';
   }
@@ -806,7 +818,49 @@ function matchPattern(key, patterns) {
   });
 }
 
-// Lógica de ejecución de conversión simulando el script de Python
+// --- PNG flipping (canvas-based, same approach as the ochpack-3ds tool) ---
+// pak_flip_mc3ds.py does scanline surgery to keep the original encoding; in
+// the browser we decode with canvas, flip and re-encode as PNG (palette and
+// bit depth are normalised by the encoder, visual content is preserved).
+// A PNG the canvas cannot decode is left verbatim with a warning, exactly
+// like the Python script's SkipPng ("LEFT AS-IS") path.
+const PNG_SIGNATURE = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+
+function isPng(data) {
+  if (data.length < PNG_SIGNATURE.length) return false;
+  for (let i = 0; i < PNG_SIGNATURE.length; i++) {
+    if (data[i] !== PNG_SIGNATURE[i]) return false;
+  }
+  return true;
+}
+
+function flipPngBytes(data, flipX, flipY) {
+  return new Promise((resolve, reject) => {
+    const blob = new Blob([data], { type: 'image/png' });
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.save();
+      ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+      ctx.drawImage(img, flipX ? -img.width : 0, flipY ? -img.height : 0);
+      ctx.restore();
+      canvas.toBlob((outBlob) => {
+        URL.revokeObjectURL(url);
+        if (!outBlob) { reject(new Error('PNG re-encode failed')); return; }
+        outBlob.arrayBuffer().then(buf => resolve(new Uint8Array(buf)));
+      }, 'image/png');
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('PNG decode failed')); };
+    img.src = url;
+  });
+}
+
+// Lógica de conversión replicando scripts/pak_flip_mc3ds.py del repo OptiCraftHeritageEdition
 btnStartConvert.addEventListener('click', async () => {
   if (!loadedConvertFile) {
     alert(currentLang === 'es' ? 'Por favor selecciona un archivo .pak primero.' : 'Please select a .pak file first.');
@@ -817,7 +871,10 @@ btnStartConvert.addEventListener('click', async () => {
   const isAll = convertFlagAll.checked;
 
   log(`\n=== ${currentLang === 'es' ? 'INICIANDO CONVERSIÓN 3DS' : 'STARTING 3DS CONVERSION'} ===`);
-  
+  log(currentLang === 'es'
+    ? (isAll ? 'Modo --all: TODOS los PNGs se voltean solo en Y (skins incluidos, sin X). Tablas de color de CPU excluidas.' : 'Modo default: title.png (Y) + assets/skins/*.png (X+Y). Tablas de color de CPU excluidas.')
+    : (isAll ? '--all mode: EVERY PNG flips on Y only (skins included, no X). CPU color tables excluded.' : 'Default mode: title.png (Y) + assets/skins/*.png (X+Y). CPU color tables excluded.'));
+
   try {
     const buffer = await loadedConvertFile.arrayBuffer();
     const bytes = new Uint8Array(buffer);
@@ -825,14 +882,13 @@ btnStartConvert.addEventListener('click', async () => {
 
     // Leer cabecera MCPK
     const magic = String.fromCharCode(...bytes.subarray(0, 4));
-    if (magic !== 'MCPK') throw new Error('Firma MCPK no válida.');
+    if (magic !== 'MCPK') throw new Error(currentLang === 'es' ? 'Firma MCPK no válida.' : 'Invalid MCPK magic signature.');
 
     const version = view.getUint32(4, false);
     const count = view.getUint32(8, false);
     const tableOffset = view.getUint32(12, false);
     const namesOffset = view.getUint32(16, false);
     const namesBytes = view.getUint32(20, false);
-    const dataAlign = view.getUint32(24, false);
 
     const decoder = new TextDecoder('utf-8');
     const namesBlob = bytes.subarray(namesOffset, namesOffset + namesBytes);
@@ -853,11 +909,17 @@ btnStartConvert.addEventListener('click', async () => {
     }
 
     let flippedCount = 0;
-    // Procesar cada entrada replicando las reglas de pak_flip_mc3ds.py
+    let leftAsIsCount = 0;
+    const outFiles = [];
+
+    // Voltear cada entrada replicando las reglas de pak_flip_mc3ds.py:
+    // --all  -> TODO se voltea solo en Y (los skins NO llevan la mitad X);
+    // default -> assets/legacy/title.png (Y) y assets/skins/*.png (X+Y);
+    // las tablas de color de CPU (assets/misc/*color*.png) nunca se voltean.
     for (let i = 0; i < entries.length; i++) {
-      let ent = entries[i];
-      let exempt = matchPattern(ent.key, CPU_LUT_SKIP);
-      
+      const ent = entries[i];
+      const exempt = matchPattern(ent.key, CPU_LUT_SKIP);
+
       let flipY = false;
       let flipX = false;
 
@@ -868,28 +930,49 @@ btnStartConvert.addEventListener('click', async () => {
         else if (!exempt && matchPattern(ent.key, DEFAULT_YFLIP)) { flipY = true; }
       }
 
-      if (flipY || flipX) {
-        try {
-          // Si es un PNG válido, realizamos la transformación de orden de filas (Y-flip)
-          // Nota: Para procesamiento avanzado de PNGs en JS se pueden aplicar librerías de manipulación de canvas, 
-          // o mantener la estructura de empaquetado intacta reportando la acción de conversión.
-          log(`[CONVERT] Procesando ${ent.key} (${flipX ? 'X+Y Flip' : 'Y Flip'})`);
-          flippedCount++;
-        } catch (err) {
-          log(`[SKIP PNG] No se pudo procesar ${ent.key}: ${err.message}`);
+      let data = ent.payload;
+      if (flipX || flipY) {
+        if (isPng(data)) {
+          try {
+            data = await flipPngBytes(data, flipX, flipY);
+            flippedCount++;
+            log(`[FLIP] ${ent.key} (${flipX && flipY ? 'X+Y' : flipX ? 'X' : 'Y'})`);
+          } catch (err) {
+            // Como el SkipPng del script Python: se copia tal cual con aviso
+            leftAsIsCount++;
+            log(`[LEFT AS-IS] ${ent.key} (${err.message})`);
+          }
+        } else {
+          leftAsIsCount++;
+          log(`[LEFT AS-IS] ${ent.key} (${currentLang === 'es' ? 'no es un PNG' : 'not a PNG'})`);
         }
       }
+      outFiles.push({ path: ent.key, data });
 
-      if ((i + 1) % 50 === 0 || i === entries.length - 1) {
-        setProgress(i + 1, entries.length, `Convirtiendo: [${i + 1}/${entries.length}]`);
+      if ((i + 1) % 25 === 0 || i === entries.length - 1) {
+        setProgress(Math.round(((i + 1) / entries.length) * 60), 100, `${currentLang === 'es' ? 'Convirtiendo' : 'Converting'}: [${i + 1}/${entries.length}]`);
+        await new Promise(r => setTimeout(r, 0)); // keep UI responsive
       }
     }
 
-    // Generar nuevo pak de salida re-empacando con la misma estructura
-    // (Utiliza la misma lógica de empaquetado del script principal adaptada a JS)
-    log(`[OK] Conversión 3DS finalizada. Total modificados: ${flippedCount}`);
-    setProgress(100, 100, currentLang === 'es' ? '¡Conversión 3DS completada!' : '3DS Conversion completed!');
-    alert(currentLang === 'es' ? `¡Conversión completada con éxito!\nArchivos procesados: ${flippedCount}` : `Conversion completed successfully!\nProcessed files: ${flippedCount}`);
+    // Re-empaquetar el .pak con la misma estructura MCPK (write_pak)
+    log(currentLang === 'es' ? 'Generando .pak de salida (formato MCPK)...' : 'Generating output .pak (MCPK format)...');
+    const outBytes = await assembleMcpk(outFiles, (i, total, key) => {
+      setProgress(60 + Math.round((i / total) * 40), 100, `${currentLang === 'es' ? 'Empaquetando' : 'Packing'}: [${i}/${total}] ${key}`);
+    });
+
+    const baseName = loadedConvertFile.name.replace(/\.pak$/i, '') || 'assets';
+    const outputName = `${baseName}_3ds.pak`;
+    downloadBlob(new Blob([outBytes], { type: 'application/octet-stream' }), outputName);
+
+    log(`\n[OK] ${currentLang === 'es' ? '¡Conversión 3DS completada!' : '3DS Conversion completed!'} ${outputName} (${formatBytes(outBytes.length)})`);
+    log(currentLang === 'es'
+      ? `Volteados: ${flippedCount} | Sin cambios: ${leftAsIsCount} | Total: ${outFiles.length}`
+      : `Flipped: ${flippedCount} | Left as-is: ${leftAsIsCount} | Total: ${outFiles.length}`);
+    setProgress(100, 100, currentLang === 'es' ? '¡Descarga iniciada!' : 'Download started!');
+    alert(currentLang === 'es'
+      ? `¡Conversión completada!\nVolteados: ${flippedCount}\nSin cambios: ${leftAsIsCount}\nDescargando: ${outputName}\n\nVoltear es su propia inversa: no lo ejecutes dos veces sobre el mismo arte.`
+      : `Conversion completed!\nFlipped: ${flippedCount}\nLeft as-is: ${leftAsIsCount}\nDownloading: ${outputName}\n\nThe flip is its own inverse: never run it twice on the same art.`);
 
   } catch (err) {
     log(`[ERROR 3DS] ${err.message}`);

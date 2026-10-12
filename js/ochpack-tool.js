@@ -45,6 +45,7 @@ const translations = {
     "back-portal": "BACK TO PORTAL",
     "goto-pak-tool": "ASSETS.PAK TOOL",
     "goto-skin-tool": "SKIN CONVERTER (3DS)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "OCHPACK TEXTURE PACK CREATOR",
     "tool-subtitle": "Convert, optimize, and build .ochpack texture packs for OptiCraft Heritage (PS2)",
     "tab-create": "📦 Build .ochpack",
@@ -86,8 +87,9 @@ const translations = {
   },
   es: {
     "back-portal": "VOLVER AL PORTAL",
-    "goto-pak-tool": "GESTOR ASSETS.PAK",
+    "goto-pak-tool": "HERRAMIENTA ASSETS.PAK",
     "goto-skin-tool": "CONVERTIDOR SKINS (3DS)",
+    "goto-ochpack-3ds": "OCHPACK (3DS)",
     "tool-title": "CREADOR DE TEXTURE PACKS .OCHPACK",
     "tool-subtitle": "Convierte, optimiza y empaqueta Texture Packs para OptiCraft Heritage (PS2)",
     "tab-create": "📦 Armar .ochpack",

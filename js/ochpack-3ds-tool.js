@@ -44,6 +44,8 @@ const translations = {
   en: {
     "back-portal": "BACK TO PORTAL",
     "goto-ps2-tool": "PS2 OCHPACK TOOL",
+    "goto-pak-tool": "ASSETS.PAK TOOL",
+    "goto-skin-tool": "SKIN CONVERTER (3DS)",
     "tool-title": "3DS TEXTURE PACK FLIPPER & OCHPACK",
     "tool-subtitle": "Convert Java Edition texture packs to native 3DS orientation and .ochpack format",
     "info-title": "Convert any Java texture pack (.ZIP) into a 3DS-ready texture pack (.zip or .ochpack).",
@@ -73,6 +75,8 @@ const translations = {
   es: {
     "back-portal": "VOLVER AL PORTAL",
     "goto-ps2-tool": "HERRAMIENTA PS2 OCHPACK",
+    "goto-pak-tool": "HERRAMIENTA ASSETS.PAK",
+    "goto-skin-tool": "CONVERTIDOR SKINS (3DS)",
     "tool-title": "CONVERSOR DE TEXTURE PACKS 3DS Y OCHPACK",
     "tool-subtitle": "Convierte Texture Packs de Java Edition a orientación nativa de 3DS y formato .ochpack",
     "info-title": "Convierte cualquier Texture Pack de Java (.ZIP) en uno compatible con 3DS (.zip o .ochpack).",
@@ -522,7 +526,6 @@ btnCopyLog.addEventListener('click', () => {
   });
 });
 
-btnClearLog.addEventListener('click2', () => { logTerminal.textContent = ''; });
 btnClearLog.addEventListener('click', () => { logTerminal.textContent = ''; });
 
 // --- Language Switcher ---

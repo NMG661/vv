@@ -1,0 +1,14 @@
+# ia shit
+.claude/
+.agents/
+specs/
+
+# all the shit plans made with ia (i hate vibecoding)
+CLAUDE.MD
+AGENT.MD
+AGENTS.MD
+CODESTYLE.MD
+ROADMAP.MD
+skills-lock.json
+
+docs/
