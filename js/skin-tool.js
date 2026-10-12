@@ -602,25 +602,12 @@ function downloadConvertedSkin() {
     if (state.processedCanvas) {
       state.processedCanvas.toBlob(blob => {
         state.processedBlob = blob;
-        downloadBlob(blob, getOutputFilename());
+        ochDownloadWithQR(blob, getOutputFilename());
       }, 'image/png');
     }
     return;
   }
-  downloadBlob(state.processedBlob, getOutputFilename());
-}
-
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 1000);
+  ochDownloadWithQR(state.processedBlob, getOutputFilename());
 }
 
 // --- Preset Configuration Handlers ---
@@ -742,7 +729,7 @@ function loadSkinFromImage(img, filename) {
 
 function handleFileInput(file) {
   if (!file || !file.type.match('image.*')) {
-    alert("Please select a valid PNG image file / Por favor selecciona una imagen PNG válida.");
+    ochAlert({ icon: 'warning', title: "Please select a valid PNG image file / Por favor selecciona una imagen PNG válida." });
     return;
   }
   const reader = new FileReader();
@@ -884,7 +871,7 @@ function generateSkinQR() {
 
   const url = input.value.trim();
   if (!url) {
-    alert("Please enter a URL / Por favor ingresa una URL válida.");
+    ochAlert({ icon: 'warning', title: "Please enter a URL / Por favor ingresa una URL válida." });
     return;
   }
 
@@ -901,11 +888,11 @@ function generateSkinQR() {
       });
       displayBox.classList.add('visible');
     } else {
-      alert("QR library not loaded yet.");
+      ochAlert({ icon: 'error', title: "QR library not loaded yet." });
     }
   } catch (err) {
     console.error("QR Error:", err);
-    alert("Could not generate QR: " + err.message);
+    ochAlert({ icon: 'error', title: "Could not generate QR", text: err.message });
   }
 }
 
@@ -982,9 +969,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
         }
-        alert("No image found in clipboard. Press Ctrl+V directly or copy an image first.");
+        ochAlert({ icon: 'warning', title: "No image found in clipboard. Press Ctrl+V directly or copy an image first." });
       } catch (err) {
-        alert("Clipboard access not allowed or empty. You can press Ctrl+V directly on the page.");
+        ochAlert({ icon: 'info', title: "Clipboard access not allowed or empty. You can press Ctrl+V directly on the page." });
       }
     });
   }

@@ -26,19 +26,6 @@ function slugify(text) {
     .replace(/_+$/, '');
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 1000);
-}
-
 // --- Multilanguage Dictionary ---
 const translations = {
   en: {
@@ -612,7 +599,7 @@ async function handleZipFile(file) {
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 100, currentLang === 'es' ? 'Error al leer el archivo.' : 'Error reading file.');
   }
 }
@@ -681,7 +668,7 @@ folderInput.addEventListener('change', (e) => {
 // --- BUILD & DOWNLOAD .OCHPACK ---
 btnStartBuild.addEventListener('click', async () => {
   if (rawFiles.length === 0 && !customPackPngBlob) {
-    alert(currentLang === 'es' ? 'Por favor selecciona primero un archivo .ZIP o carpeta de Texture Pack.' : 'Please select a Texture Pack .ZIP or folder first.');
+    ochAlert({ icon: 'warning', title: currentLang === 'es' ? 'Por favor selecciona primero un archivo .ZIP o carpeta de Texture Pack.' : 'Please select a Texture Pack .ZIP or folder first.' });
     return;
   }
 
@@ -758,14 +745,14 @@ type=texturepack
       outFilename += '.ochpack';
     }
 
-    downloadBlob(outBlob, outFilename);
+    await ochDownloadWithQR(outBlob, outFilename);
     log(`[SUCCESS] ${currentLang === 'es' ? '¡Archivo descargado!' : 'File downloaded!'} ${outFilename} (${formatBytes(outBlob.size)})`);
     log(`[INFO] ${currentLang === 'es' ? 'Cópialo a mass:/OptiCraftHeritage/texturepacks/ o mass:/texturepacks/ en tu USB.' : 'Copy to mass:/OptiCraftHeritage/texturepacks/ or mass:/texturepacks/ on your USB.'}`);
     setProgress(100, 100, currentLang === 'es' ? '¡Descarga iniciada!' : 'Download started!');
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 100, 'Error.');
   } finally {
     btnStartBuild.disabled = false;
@@ -881,7 +868,7 @@ async function loadOchPackForInspect(file) {
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 100, 'Error.');
   }
 }
@@ -914,10 +901,10 @@ function filterAndRenderInspectTable() {
       try {
         const blob = await f.entry.async("blob");
         const filename = f.path.split('/').pop() || 'file';
-        downloadBlob(blob, filename);
+        await ochDownloadWithQR(blob, filename);
         log(`[DOWNLOAD] ${f.path}`);
       } catch (err) {
-        alert(err.message);
+        ochError(err.message);
       }
     });
     inspectFileListBody.appendChild(tr);
@@ -949,12 +936,12 @@ btnExportZip.addEventListener('click', async () => {
     });
 
     const baseName = (inputOutputName.value.replace(/\.ochpack$/i, '') || 'textures') + '.zip';
-    downloadBlob(zipBlob, baseName);
+    await ochDownloadWithQR(zipBlob, baseName);
     log(`[OK] ZIP descargado: ${baseName} (${formatBytes(zipBlob.size)})`);
     setProgress(100, 100, currentLang === 'es' ? 'Descarga completada.' : 'Download completed.');
   } catch (err) {
     log(`[ERROR ZIP] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
   } finally {
     btnExportZip.disabled = false;
   }
@@ -963,7 +950,7 @@ btnExportZip.addEventListener('click', async () => {
 // --- Console Log Actions ---
 btnCopyLog.addEventListener('click', () => {
   navigator.clipboard.writeText(logTerminal.textContent).then(() => {
-    alert(currentLang === 'es' ? 'Registro copiado al portapapeles.' : 'Log copied to clipboard.');
+    ochAlert({ icon: 'success', title: currentLang === 'es' ? 'Registro copiado al portapapeles.' : 'Log copied to clipboard.' });
   });
 });
 

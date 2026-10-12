@@ -40,19 +40,6 @@ function formatBytes(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 1000);
-}
-
 // --- Multilanguage Dictionary ---
 const translations = {
   en: {
@@ -508,7 +495,7 @@ packDropzone.addEventListener('drop', async (e) => {
 // Run Packaging
 btnStartPack.addEventListener('click', async () => {
   if (preparedPackFiles.length === 0) {
-    alert(currentLang === 'es' ? 'Por favor selecciona archivos o una carpeta primero.' : 'Please select files or a folder first.');
+    ochAlert({ icon: 'warning', title: currentLang === 'es' ? 'Por favor selecciona archivos o una carpeta primero.' : 'Please select files or a folder first.' });
     return;
   }
 
@@ -556,15 +543,14 @@ btnStartPack.addEventListener('click', async () => {
     const totalPakSize = outBytes.length;
 
     const blob = new Blob([outBytes], { type: 'application/octet-stream' });
-    downloadBlob(blob, outputName);
 
     log(`\n[OK] ${currentLang === 'es' ? '¡Empaquetado exitoso!' : 'Packing completed!'} ${filtered.length} ${currentLang === 'es' ? 'archivos empaquetados en' : 'files packed into'} '${outputName}' (${formatBytes(totalPakSize)})`);
     setProgress(100, 100, currentLang === 'es' ? '¡Archivo .pak generado con éxito!' : '.pak file generated successfully!');
-    alert(currentLang === 'es' ? `¡Empaquetado completado!\nArchivos: ${filtered.length}\nTamaño: ${formatBytes(totalPakSize)}\nDescargando: ${outputName}` : `Packing completed!\nFiles: ${filtered.length}\nSize: ${formatBytes(totalPakSize)}\nDownloading: ${outputName}`);
+    await ochDownloadWithQR(blob, outputName);
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 0, 'Error.');
   } finally {
     btnStartPack.disabled = false;
@@ -671,7 +657,7 @@ async function processPakFile(file) {
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 0, 'Error.');
   }
 }
@@ -700,7 +686,7 @@ function renderPakFilesTable() {
     btnDownload.addEventListener('click', () => {
       const filename = f.path.split('/').pop() || 'file';
       const blob = new Blob([f.data], { type: 'application/octet-stream' });
-      downloadBlob(blob, filename);
+      ochDownloadWithQR(blob, filename);
     });
 
     tdAction.appendChild(btnDownload);
@@ -755,13 +741,13 @@ btnDownloadAllZip.addEventListener('click', async () => {
       setProgress(meta.percent, 100, `${currentLang === 'es' ? 'Comprimiendo ZIP' : 'Compressing ZIP'}: ${meta.percent.toFixed(0)}%`);
     });
 
-    downloadBlob(zipBlob, "assets_extracted.zip");
+    await ochDownloadWithQR(zipBlob, "assets_extracted.zip");
     log(`[OK] ${currentLang === 'es' ? '¡ZIP generado exitosamente!' : 'ZIP generated successfully!'} (${formatBytes(zipBlob.size)})`);
     setProgress(100, 100, currentLang === 'es' ? 'Descarga de ZIP iniciada.' : 'ZIP download started.');
 
   } catch (err) {
     log(`[ERROR ZIP] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
   } finally {
     btnDownloadAllZip.disabled = false;
   }
@@ -787,7 +773,7 @@ convertDropzone.addEventListener('drop', async (e) => {
   if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
     loadedConvertFile = e.dataTransfer.files[0];
     log(`[3DS CONVERT] ${currentLang === 'es' ? 'Archivo seleccionado' : 'File selected'}: ${loadedConvertFile.name}`);
-    alert(currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".`);
+    ochAlert({ icon: 'info', title: currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".` });
   }
 });
 
@@ -795,7 +781,7 @@ pakConvertInput.addEventListener('change', async (e) => {
   if (e.target.files && e.target.files.length > 0) {
     loadedConvertFile = e.target.files[0];
     log(`[3DS CONVERT] ${currentLang === 'es' ? 'Archivo seleccionado' : 'File selected'}: ${loadedConvertFile.name}`);
-    alert(currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".`);
+    ochAlert({ icon: 'info', title: currentLang === 'es' ? `Archivo cargado: ${loadedConvertFile.name}. Pulsa "Iniciar Conversión 3DS".` : `File loaded: ${loadedConvertFile.name}. Click "Start 3DS Conversion".` });
     pakConvertInput.value = '';
   }
 });
@@ -863,7 +849,7 @@ function flipPngBytes(data, flipX, flipY) {
 // Lógica de conversión replicando scripts/pak_flip_mc3ds.py del repo OptiCraftHeritageEdition
 btnStartConvert.addEventListener('click', async () => {
   if (!loadedConvertFile) {
-    alert(currentLang === 'es' ? 'Por favor selecciona un archivo .pak primero.' : 'Please select a .pak file first.');
+    ochAlert({ icon: 'warning', title: currentLang === 'es' ? 'Por favor selecciona un archivo .pak primero.' : 'Please select a .pak file first.' });
     return;
   }
 
@@ -963,20 +949,21 @@ btnStartConvert.addEventListener('click', async () => {
 
     const baseName = loadedConvertFile.name.replace(/\.pak$/i, '') || 'assets';
     const outputName = `${baseName}_3ds.pak`;
-    downloadBlob(new Blob([outBytes], { type: 'application/octet-stream' }), outputName);
 
     log(`\n[OK] ${currentLang === 'es' ? '¡Conversión 3DS completada!' : '3DS Conversion completed!'} ${outputName} (${formatBytes(outBytes.length)})`);
     log(currentLang === 'es'
       ? `Volteados: ${flippedCount} | Sin cambios: ${leftAsIsCount} | Total: ${outFiles.length}`
       : `Flipped: ${flippedCount} | Left as-is: ${leftAsIsCount} | Total: ${outFiles.length}`);
     setProgress(100, 100, currentLang === 'es' ? '¡Descarga iniciada!' : 'Download started!');
-    alert(currentLang === 'es'
-      ? `¡Conversión completada!\nVolteados: ${flippedCount}\nSin cambios: ${leftAsIsCount}\nDescargando: ${outputName}\n\nVoltear es su propia inversa: no lo ejecutes dos veces sobre el mismo arte.`
-      : `Conversion completed!\nFlipped: ${flippedCount}\nLeft as-is: ${leftAsIsCount}\nDownloading: ${outputName}\n\nThe flip is its own inverse: never run it twice on the same art.`);
+    await ochDownloadWithQR(new Blob([outBytes], { type: 'application/octet-stream' }), outputName, {
+      note: currentLang === 'es'
+        ? '⚠️ Voltear es su propia inversa: no lo ejecutes dos veces sobre el mismo arte.'
+        : '⚠️ The flip is its own inverse: never run it twice on the same art.'
+    });
 
   } catch (err) {
     log(`[ERROR 3DS] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 0, 'Error.');
   } finally {
     btnStartConvert.disabled = false;

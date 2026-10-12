@@ -184,19 +184,6 @@ function slugify(text) {
     .replace(/_+$/, '');
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, 1000);
-}
-
 function formatBytes(bytes) {
   if (bytes === 0) return '0 B';
   const k = 1024;
@@ -365,7 +352,7 @@ async function loadZip(file) {
     log(`[OK] ${currentLang === 'es' ? 'Pack listo para procesar.' : 'Pack ready for processing.'}`);
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 100, 'Error.');
   }
 }
@@ -504,7 +491,7 @@ type=texturepack
       filename += '.zip';
     }
 
-    downloadBlob(finalBlob, filename);
+    await ochDownloadWithQR(finalBlob, filename);
 
     log(`\n[SUCCESS] ${currentLang === 'es' ? '¡Conversión completada!' : 'Conversion completed!'} ${filename} (${formatBytes(finalBlob.size)})`);
     log(`[INFO] ${currentLang === 'es' ? 'Copia el archivo a tu tarjeta SD en: opticraft/.minecraft/texturepacks/' : 'Copy the file to your SD card at: opticraft/.minecraft/texturepacks/'}`);
@@ -512,7 +499,7 @@ type=texturepack
 
   } catch (err) {
     log(`[ERROR] ${err.message}`);
-    alert(`Error: ${err.message}`);
+    ochError(err.message);
     setProgress(0, 100, 'Error.');
   } finally {
     btnStartConvert.disabled = false;
@@ -522,7 +509,7 @@ type=texturepack
 // --- Console Log Actions ---
 btnCopyLog.addEventListener('click', () => {
   navigator.clipboard.writeText(logTerminal.textContent).then(() => {
-    alert(currentLang === 'es' ? 'Registro copiado al portapapeles.' : 'Log copied to clipboard.');
+    ochAlert({ icon: 'success', title: currentLang === 'es' ? 'Registro copiado al portapapeles.' : 'Log copied to clipboard.' });
   });
 });
 
