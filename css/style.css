@@ -277,6 +277,15 @@ main {
   font-size: 15px
 }
 
+.port-title i {
+  margin-right: 9px;
+  opacity: .85
+}
+
+.legacy-button i {
+  margin-right: 8px
+}
+
 .port-meta {
   display: block;
   margin-top: 5px;

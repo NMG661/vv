@@ -52,35 +52,39 @@
         <div class="port-browser">
           <div class="port-list">
             <button class="port-entry active" data-port="dsi">
-              <span class="port-title">OptiCraft Heritage — DSi</span>
+              <span class="port-title"><i class="fa-solid fa-gamepad" aria-hidden="true"></i>OptiCraft Heritage — DSi</span>
               <span class="port-meta" data-i18n="port-dsi-meta">Nintendo DSi · Homebrew</span>
             </button>
             <button class="port-entry" data-port="3ds">
-              <span class="port-title">OptiCraft Heritage — 3DS</span>
+              <span class="port-title"><i class="fa-solid fa-gamepad" aria-hidden="true"></i>OptiCraft Heritage — 3DS</span>
               <span class="port-meta" data-i18n="port-3ds-meta">Nintendo 3DS · Homebrew</span>
             </button>
+            <button class="port-entry" data-port="wii">
+              <span class="port-title"><i class="fa-solid fa-gamepad" aria-hidden="true"></i>OptiCraft Heritage — Wii</span>
+              <span class="port-meta" data-i18n="port-wii-meta">Nintendo Wii · Homebrew</span>
+            </button>
             <button class="port-entry" data-port="ps2">
-              <span class="port-title">OptiCraft Heritage — PS2 Enhanced</span>
+              <span class="port-title"><i class="fa-brands fa-playstation" aria-hidden="true"></i>OptiCraft Heritage — PS2 Enhanced</span>
               <span class="port-meta" data-i18n="port-ps2-meta">PlayStation 2 · Enhanced build</span>
             </button>
             <button class="port-entry" data-port="psp">
-              <span class="port-title">OptiCraft Heritage — PSP</span>
+              <span class="port-title"><i class="fa-brands fa-playstation" aria-hidden="true"></i>OptiCraft Heritage — PSP</span>
               <span class="port-meta" data-i18n="port-psp-meta">PlayStation Portable · Homebrew</span>
             </button>
             <button class="port-entry" data-port="xbox">
-              <span class="port-title">OptiCraft Heritage — Original Xbox</span>
+              <span class="port-title"><i class="fa-brands fa-xbox" aria-hidden="true"></i>OptiCraft Heritage — Original Xbox</span>
               <span class="port-meta" data-i18n="port-xbox-meta">Xbox · Homebrew / xemu</span>
             </button>
             <button class="port-entry" data-port="android">
-              <span class="port-title">OptiCraft Heritage — Android</span>
+              <span class="port-title"><i class="fa-brands fa-android" aria-hidden="true"></i>OptiCraft Heritage — Android</span>
               <span class="port-meta" data-i18n="port-android-meta">Android · ARM64</span>
             </button>
             <button class="port-entry" data-port="switch">
-              <span class="port-title">OptiCraft Heritage — Nintendo Switch</span>
+              <span class="port-title"><i class="fa-solid fa-gamepad" aria-hidden="true"></i>OptiCraft Heritage — Nintendo Switch</span>
               <span class="port-meta" data-i18n="port-switch-meta">Nintendo Switch · Homebrew</span>
             </button>
             <button class="port-entry" data-port="ps4">
-              <span class="port-title">OptiCraft Heritage — PS4</span>
+              <span class="port-title"><i class="fa-brands fa-playstation" aria-hidden="true"></i>OptiCraft Heritage — PS4</span>
               <span class="port-meta" data-i18n="port-ps4-meta">PlayStation 4 · Homebrew / shadPS4</span>
             </button>
             <!-- <button class="port-entry" data-port="ps3">
@@ -88,12 +92,20 @@
               <span class="port-meta" data-i18n="port-ps3-meta">PlayStation 3 · Homebrew</span>
             </button> -->
             <button class="port-entry" data-port="vita">
-              <span class="port-title">OptiCraft Heritage — PS Vita</span>
+              <span class="port-title"><i class="fa-brands fa-playstation" aria-hidden="true"></i>OptiCraft Heritage — PS Vita</span>
               <span class="port-meta" data-i18n="port-vita-meta">PlayStation Vita · Homebrew</span>
             </button>
+            <button class="port-entry" data-port="windows">
+              <span class="port-title"><i class="fa-brands fa-windows" aria-hidden="true"></i>OptiCraft Heritage — Windows</span>
+              <span class="port-meta" data-i18n="port-windows-meta">Windows · GCC / MSVC</span>
+            </button>
             <button class="port-entry" data-port="linux">
-              <span class="port-title">OptiCraft Heritage — Linux</span>
+              <span class="port-title"><i class="fa-brands fa-linux" aria-hidden="true"></i>OptiCraft Heritage — Linux</span>
               <span class="port-meta" data-i18n="port-linux-meta">Linux · Community builds</span>
+            </button>
+            <button class="port-entry" data-port="macos">
+              <span class="port-title"><i class="fa-brands fa-apple" aria-hidden="true"></i>OptiCraft Heritage — macOS</span>
+              <span class="port-meta" data-i18n="port-macos-meta">macOS · Apple Silicon / Intel</span>
             </button>
           </div>
           <div class="port-preview">
@@ -102,7 +114,8 @@
                 <h2>Nintendo DSi</h2>
                 <p data-i18n="port-dsi-desc">Unofficial OptiCraft Heritage port for Nintendo DSi hardware.</p>
                 <a class="legacy-button" href="https://github.com/Danielpro9/Opticraftheritage-Dsi-port" target="_blank"
-                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
               </div>
             </article>
             <article class="port-view" id="view-3ds">
@@ -110,10 +123,23 @@
                 <h2>Nintendo 3DS</h2>
                 <p data-i18n="port-3ds-desc">Unofficial OptiCraft Heritage port targeting Nintendo 3DS.</p>
                 <a class="legacy-button" href="https://drive.google.com/drive/folders/1FVjQv72blnR8LRe3ioc95BN1a9567nEk"
-                  target="_blank" rel="noreferrer" data-i18n="btn-download">DOWNLOAD</a>
+                  target="_blank" rel="noreferrer"><i class="fa-brands fa-google-drive" aria-hidden="true"></i><span
+                    data-i18n="btn-download">DOWNLOAD</span></a>
                 <a class="legacy-button"
                   href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-3ds"
-                  target="_blank" rel="noreferrer" data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</a>
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</span></a>
+              </div>
+            </article>
+            <article class="port-view" id="view-wii">
+              <div class="port-info">
+                <h2>Nintendo Wii</h2>
+                <p data-i18n="port-wii-desc">Community OptiCraft Heritage port targeting the Nintendo Wii, built with
+                  devkitPPC.</p>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-wii"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</span></a>
               </div>
             </article>
             <article class="port-view" id="view-ps2">
@@ -121,13 +147,16 @@
                 <h2>PlayStation 2 — Enhanced</h2>
                 <p data-i18n="port-ps2-desc">An improved OptiCraft Heritage build for the original PlayStation 2.</p>
                 <a class="legacy-button" href="https://github.com/OptiJuegos/OptiCraftHeritageEdition" target="_blank"
-                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
                 <a class="legacy-button"
                   href="https://www.mediafire.com/file/zx4cuebynotubvn/OptiCraftHeritage+PS2+95D.7z/file"
-                  target="_blank" rel="noreferrer" data-i18n="btn-ps2-build95d">DOWNLOAD (BUILD 95d)</a>
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-download" aria-hidden="true"></i><span
+                    data-i18n="btn-ps2-build95d">DOWNLOAD (BUILD 95d)</span></a>
                 <a class="legacy-button"
                   href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-ps2"
-                  target="_blank" rel="noreferrer" data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</a>
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</span></a>
               </div>
             </article>
             <article class="port-view" id="view-psp">
@@ -135,9 +164,15 @@
                 <h2>PlayStation Portable</h2>
                 <p data-i18n="port-psp-desc">Unofficial OptiCraft Heritage port for PlayStation Portable (PSP).</p>
                 <a class="legacy-button" href="https://github.com/erluza/OCHeritage-PSP" target="_blank"
-                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-                <a class="legacy-button" href="https://gofile.io/d/AGVolAMG" target="_blank" rel="noreferrer"
-                  data-i18n="btn-psp-download">DOWNLOAD (PRECOMPILED)</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
+                <a class="legacy-button" href="https://gofile.io/d/AGVolAMG" target="_blank" rel="noreferrer"><i
+                    class="fa-solid fa-download" aria-hidden="true"></i><span data-i18n="btn-psp-download">DOWNLOAD
+                    (PRECOMPILED)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-psp"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</span></a>
               </div>
             </article>
             <article class="port-view" id="view-xbox">
@@ -147,7 +182,8 @@
                   support for xemu.</p>
                 <a class="legacy-button"
                   href="https://github.com/xeodeo/OptiCraft-Heritage-XBOX-CLASSIC-Edition/releases" target="_blank"
-                  rel="noreferrer" data-i18n="btn-releases">RELEASES</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-releases">RELEASES</span></a>
               </div>
             </article>
             <article class="port-view" id="view-android">
@@ -156,7 +192,12 @@
                 <p data-i18n="port-android-desc">ARM64 Android build of OptiCraft Heritage, currently targeting Android
                   7 and newer.</p>
                 <a class="legacy-button" href="https://github.com/ivandscds/OptiCraftHeritageEditionAndroid"
-                  target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  target="_blank" rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/ivandscds/OptiCraftHeritageEditionAndroid/workflows/android.yml/apk-debug"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</span></a>
               </div>
             </article>
             <article class="port-view" id="view-switch">
@@ -165,7 +206,8 @@
                 <p data-i18n="port-switch-desc">Native Nintendo Switch Homebrew target built with devkitA64 and libnx.
                 </p>
                 <a class="legacy-button" href="https://github.com/franco2705/OptiCraftHeritageEditionNX" target="_blank"
-                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
               </div>
             </article>
             <article class="port-view" id="view-ps4">
@@ -174,7 +216,8 @@
                 <p data-i18n="port-ps4-desc">Experimental PS4 Homebrew port using the OpenOrbis toolchain, also
                   targeting shadPS4.</p>
                 <a class="legacy-button" href="https://github.com/ScratchMelodii0/OptiCraftHeritageEditionPS4"
-                  target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  target="_blank" rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
               </div>
             </article>
             <!-- <article class="port-view" id="view-ps3">
@@ -190,7 +233,38 @@
                 <h2>PlayStation Vita</h2>
                 <p data-i18n="port-vita-desc">Community OptiCraft Heritage port targeting PlayStation Vita hardware.</p>
                 <a class="legacy-button" href="https://github.com/DrDecki/OptiCraft-Vita" target="_blank"
-                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
+              </div>
+            </article>
+            <article class="port-view" id="view-windows">
+              <div class="port-info">
+                <h2>Windows</h2>
+                <p data-i18n="port-windows-desc">Native Windows builds of OptiCraft Heritage, from 64-bit GCC/MSVC to
+                  legacy 32-bit and ARM64.</p>
+                <a class="legacy-button" href="https://github.com/erluza/OCHeritageCommunityFork" target="_blank"
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-windows-x64-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x64-gcc">NIGHTLY X64 GCC (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-windows-x64-msvc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x64-msvc">NIGHTLY X64 MSVC (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-windows-arm64-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-arm64">NIGHTLY ARM64 (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-windows-x86-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x86">NIGHTLY X86 32-BIT (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-windows-x86-gcc-legacy"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x86-legacy">NIGHTLY X86 LEGACY (CI)</span></a>
               </div>
             </article>
             <article class="port-view" id="view-linux">
@@ -199,12 +273,45 @@
                 <p data-i18n="port-linux-desc">Community Linux builds of OptiCraft Heritage, including native
                   SDL2/OpenGL builds.</p>
                 <a class="legacy-button" href="https://github.com/Muzifer01/OptiCraft173EditionLinux" target="_blank"
-                  rel="noreferrer" data-i18n="btn-muzifer-build">MUZIFER01 BUILD</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-muzifer-build">MUZIFER01 BUILD</span></a>
                 <a class="legacy-button" href="https://github.com/Brunoxx-create/OptiCraft-In-LINUX" target="_blank"
-                  rel="noreferrer" data-i18n="btn-brunox-build">BRUNOX X BUILD</a>
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-brunox-build">BRUNOX X BUILD</span></a>
                 <a class="legacy-button"
                   href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-linux-x64-gcc"
-                  target="_blank" rel="noreferrer" data-i18n="btn-nightly-build">NIGHTLY BUILD (CI)</a>
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x64-gcc">NIGHTLY X64 GCC (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-linux-arm64-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-arm64">NIGHTLY ARM64 (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-linux-x86-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-x86">NIGHTLY X86 32-BIT (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-linux-armv7-gcc"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-armv7">NIGHTLY ARMV7 (CI)</span></a>
+              </div>
+            </article>
+            <article class="port-view" id="view-macos">
+              <div class="port-info">
+                <h2>macOS</h2>
+                <p data-i18n="port-macos-desc">Native macOS builds of OptiCraft Heritage for Apple Silicon (ARM64) and
+                  Intel (x64).</p>
+                <a class="legacy-button" href="https://github.com/erluza/OCHeritageCommunityFork" target="_blank"
+                  rel="noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span
+                    data-i18n="btn-view-project">VIEW PROJECT</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-macos-arm64-clang"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-apple-silicon">NIGHTLY APPLE SILICON (CI)</span></a>
+                <a class="legacy-button"
+                  href="https://nightly.link/erluza/OCHeritageCommunityFork/workflows/build.yml/opticraft-macos-x64-clang"
+                  target="_blank" rel="noreferrer"><i class="fa-solid fa-moon" aria-hidden="true"></i><span
+                    data-i18n="btn-nightly-intel">NIGHTLY INTEL X64 (CI)</span></a>
               </div>
             </article>
           </div>
@@ -213,7 +320,7 @@
           <span>ESC</span> BACK
         </div>
         <div class="panel-footer-actions">
-          <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
+          <button class="legacy-button back-home"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span data-i18n="btn-back">BACK</span></button>
         </div>
       </section>
 
@@ -225,7 +332,7 @@
           <div class="about-copy" id="about-copy-container"></div>
         </div>
         <div class="panel-footer-actions">
-          <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
+          <button class="legacy-button back-home"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span data-i18n="btn-back">BACK</span></button>
         </div>
       </section>
     </main>
