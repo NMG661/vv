@@ -1,274 +1,296 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" id="meta-desc" content="OptiCraft Heritage — Web tool to create, inspect, and optimize .ochpack texture packs for PlayStation 2.">
-<title>OptiCraft Heritage — OCHPACK Creator (PS2)</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="ochpack-tool.css">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="meta-desc"
+    content="OptiCraft Heritage — Web tool to create, inspect, and optimize .ochpack texture packs for PlayStation 2.">
+  <title>OptiCraft Heritage — OCHPACK Creator (PS2)</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/ochpack-tool.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="js/jszip.min.js"></script>
 </head>
+
 <body>
-<div class="screen">
-  <div class="panorama" aria-hidden="true">
-    <div class="panorama-track">
-      <img src="TU12_Panorama_Background_S.png" alt="">
-      <img src="TU12_Panorama_Background_S.png" alt="">
+  <div class="screen">
+    <div class="panorama" aria-hidden="true">
+      <div class="panorama-track">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+      </div>
     </div>
-  </div>
-  <div class="panorama-shade" aria-hidden="true"></div>
+    <div class="panorama-shade" aria-hidden="true"></div>
 
-  <!-- Top Navigation -->
-  <header class="top-nav">
-    <div class="nav-buttons-group">
-      <a class="nav-back-btn" href="index.html" id="btn-back-portal">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span data-i18n="back-portal">BACK TO PORTAL</span>
-      </a>
-      <a class="nav-back-btn accent" href="pak-tool.html" id="btn-goto-pak">
-        <i class="fa-solid fa-box-archive"></i>
-        <span data-i18n="goto-pak-tool">ASSETS.PAK TOOL</span>
-      </a>
-    </div>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
-        <img class="lang-flag" src="flag-us.png" alt="English">
-      </button>
-      <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
-        <img class="lang-flag" src="flag-ar.png" alt="Español">
-      </button>
-    </div>
-  </header>
-
-  <main class="tool-container">
-    <div class="tool-header">
-      <div class="ps2-badge-header">PlayStation 2 Edition</div>
-      <h1 class="tool-title" data-i18n="tool-title">OCHPACK TEXTURE PACK CREATOR</h1>
-      <p class="tool-subtitle" data-i18n="tool-subtitle">Convert, optimize, and build .ochpack texture packs for OptiCraft Heritage (PS2)</p>
-    </div>
-
-    <section class="legacy-panel">
-      <!-- Tabs Navigation -->
-      <nav class="tabs-nav" role="tablist">
-        <button class="tab-btn active" id="tabBtnCreate" data-tab="tabCreate">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <span data-i18n="tab-create">📦 Build .ochpack</span>
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div class="nav-buttons-group">
+        <a class="nav-back-btn" href="index.html" id="btn-back-portal">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="back-portal">BACK TO PORTAL</span>
+        </a>
+        <a class="nav-back-btn accent" href="pak-tool.html" id="btn-goto-pak">
+          <i class="fa-solid fa-box-archive"></i>
+          <span data-i18n="goto-pak-tool">ASSETS.PAK TOOL</span>
+        </a>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
+          <img class="lang-flag" src="images/flag-us.png" alt="English">
         </button>
-        <button class="tab-btn" id="tabBtnInspect" data-tab="tabInspect">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <span data-i18n="tab-inspect">🔍 Inspect & Edit .ochpack</span>
+        <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
+          <img class="lang-flag" src="images/flag-ar.png" alt="Español">
         </button>
-      </nav>
+      </div>
+    </header>
 
-      <!-- TAB 1: Crear / Convertir Texture Pack -->
-      <div class="tab-pane active" id="tabCreate">
-        <div class="info-card">
-          <p><strong data-i18n="create-info-title">Convert any Minecraft texture pack (.ZIP or folder) to .ochpack for PS2.</strong></p>
-          <p data-i18n="create-info-desc">Automatically cleans out incompatible Java .class files, sets up mod.info & pack.txt, and verifies PS2 texture resolution.</p>
-        </div>
+    <main class="tool-container">
+      <div class="tool-header">
+        <div class="ps2-badge-header">PlayStation 2 Edition</div>
+        <h1 class="tool-title" data-i18n="tool-title">OCHPACK TEXTURE PACK CREATOR</h1>
+        <p class="tool-subtitle" data-i18n="tool-subtitle">Convert, optimize, and build .ochpack texture packs for
+          OptiCraft Heritage (PS2)</p>
+      </div>
 
-        <!-- Hidden inputs -->
-        <input type="file" id="zipOrFilesInput" accept=".zip,.ochpack" style="display:none">
-        <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
-        <input type="file" id="customPackPngInput" accept="image/png,image/jpeg,image/webp" style="display:none">
-
-        <!-- Dropzone -->
-        <div class="dropzone" id="createDropzone">
-          <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-          <div class="dropzone-text" data-i18n="create-dropzone-text">
-            Drag & drop your texture pack (.ZIP or folder) here, or tap to choose
-          </div>
-          <div class="dropzone-actions">
-            <button type="button" class="legacy-btn" id="btnSelectZip" data-i18n="btn-select-zip">
-              <i class="fa-solid fa-file-zipper"></i> Select .ZIP Pack (Mobile & PC)
-            </button>
-            <button type="button" class="legacy-btn" id="btnSelectFolder" data-i18n="btn-select-folder">
-              <i class="fa-solid fa-folder-tree"></i> Select Folder (PC)
-            </button>
-          </div>
-        </div>
-
-        <!-- PS2 Texture Pack Live Preview Card -->
-        <div class="ps2-preview-section">
-          <div class="ps2-preview-title" data-i18n="ps2-preview-heading">PS2 Texture Pack Preview (Live In-Game Look):</div>
-          <div class="ps2-pack-card" id="previewPackCard">
-            <div class="pack-thumbnail-wrap" id="packThumbnailWrap" title="Click to upload custom pack.png">
-              <img class="pack-thumbnail-img" id="previewPackImg" src="" alt="pack.png" style="display:none;">
-              <div id="previewPackImgFallback" style="font-size:28px; color:#555;"><i class="fa-solid fa-image"></i></div>
-              <div class="pack-thumbnail-overlay">
-                <i class="fa-solid fa-camera"></i>
-                <span data-i18n="btn-change-icon">Change icon</span>
-              </div>
-            </div>
-            <div class="pack-details-content">
-              <h2 class="pack-card-name" id="previewCardName">Default Texture Pack</h2>
-              <p class="pack-card-desc1" id="previewCardDesc1">Standard Minecraft look & feel</p>
-              <p class="pack-card-desc2" id="previewCardDesc2">By Heritage Team</p>
-              <div class="pack-meta-pills" id="previewCardPills">
-                <span class="pack-pill ps2">PS2 · type=texturepack</span>
-                <span class="pack-pill res" id="pillResolution">Res: 16x (Optimal)</span>
-                <span class="pack-pill files" id="pillFileCount">0 files</span>
-                <span class="pack-pill clean" id="pillCleanCount" style="display:none;">0 cleaned</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Metadata Form -->
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label" for="inputPackName" data-i18n="label-pack-name">Pack Name (Display in PS2):</label>
-            <input type="text" class="form-input" id="inputPackName" placeholder="DarkCraft" maxlength="34">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="inputPackId" data-i18n="label-pack-id">Internal ID (Lowercase, no spaces):</label>
-            <input type="text" class="form-input" id="inputPackId" placeholder="darkcraft" pattern="[a-zA-Z0-9_\-]+">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="inputPackAuthor" data-i18n="label-pack-author">Author / Creator:</label>
-            <input type="text" class="form-input" id="inputPackAuthor" placeholder="DarkCraft Team" maxlength="34">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="inputPackVersion" data-i18n="label-pack-version">Version:</label>
-            <input type="text" class="form-input" id="inputPackVersion" placeholder="1.2.5" value="1.2.5">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inputPackDesc1" data-i18n="label-pack-desc1">Description (Line 1 - max 34 chars):</label>
-          <input type="text" class="form-input" id="inputPackDesc1" placeholder="Dark, clean, & retro" maxlength="34">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inputPackDesc2" data-i18n="label-pack-desc2">Subtitle / Details (Line 2 - max 34 chars):</label>
-          <input type="text" class="form-input" id="inputPackDesc2" placeholder="(16-Bit Clouds) for PS2" maxlength="34">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inputOutputName" data-i18n="label-output-name">Output file name (.ochpack):</label>
-          <input type="text" class="form-input" id="inputOutputName" placeholder="DarkCraft.ochpack">
-        </div>
-
-        <!-- PS2 Optimization Toggles -->
-        <div class="checkbox-group">
-          <label class="checkbox-label">
-            <input type="checkbox" id="chkCleanClass" checked>
-            <span data-i18n="chk-clean-classes">Clean incompatible Java files (.class, paulscode, com/jcraft) and OS junk (.DS_Store, Thumbs.db)</span>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" id="chkGenerateMeta" checked>
-            <span data-i18n="chk-gen-meta">Generate official mod.info and pack.txt formatted for PS2 runtime</span>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" id="chkResizePackPng" checked>
-            <span data-i18n="chk-resize-icon">Ensure pack.png thumbnail is 128x128 pixels (PS2 recommended limit)</span>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" id="chkStripWrapper" checked>
-            <span data-i18n="chk-strip-wrapper">Normalize folder structure (remove redundant outer folder wrapper if present)</span>
-          </label>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-          <button type="button" class="legacy-btn primary" id="btnStartBuild" style="min-width: 260px;" data-i18n="btn-start-build">
-            <i class="fa-solid fa-bolt"></i> Build & Download .ochpack
+      <section class="legacy-panel">
+        <!-- Tabs Navigation -->
+        <nav class="tabs-nav" role="tablist">
+          <button class="tab-btn active" id="tabBtnCreate" data-tab="tabCreate">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span data-i18n="tab-create">📦 Build .ochpack</span>
           </button>
-        </div>
-      </div>
+          <button class="tab-btn" id="tabBtnInspect" data-tab="tabInspect">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span data-i18n="tab-inspect">🔍 Inspect & Edit .ochpack</span>
+          </button>
+        </nav>
 
-      <!-- TAB 2: Inspeccionar / Editar .ochpack -->
-      <div class="tab-pane" id="tabInspect">
-        <div class="info-card">
-          <p><strong data-i18n="inspect-info-title">Inspect, tweak, and re-export any existing .ochpack file.</strong></p>
-          <p data-i18n="inspect-info-desc">Load any .ochpack (e.g., DarkCraft.ochpack) to edit metadata, replace thumbnails, search internal textures, or extract everything to .ZIP.</p>
-        </div>
-
-        <input type="file" id="inspectFileInput" accept=".ochpack,.zip" style="display:none">
-
-        <!-- Dropzone for inspecting -->
-        <div class="dropzone" id="inspectDropzone">
-          <div class="dropzone-icon"><i class="fa-solid fa-box-open"></i></div>
-          <div class="dropzone-text" data-i18n="inspect-dropzone-text">
-            Drag & drop an existing .ochpack file here, or tap to browse
+        <!-- TAB 1: Crear / Convertir Texture Pack -->
+        <div class="tab-pane active" id="tabCreate">
+          <div class="info-card">
+            <p><strong data-i18n="create-info-title">Convert any Minecraft texture pack (.ZIP or folder) to .ochpack for
+                PS2.</strong></p>
+            <p data-i18n="create-info-desc">Automatically cleans out incompatible Java .class files, sets up mod.info &
+              pack.txt, and verifies PS2 texture resolution.</p>
           </div>
-          <div class="dropzone-actions">
-            <button type="button" class="legacy-btn" id="btnSelectInspect" data-i18n="btn-select-inspect">
-              <i class="fa-solid fa-file-import"></i> Browse .ochpack file...
-            </button>
-          </div>
-        </div>
 
-        <!-- Inspect Results Section -->
-        <div id="inspectDetailsSection" style="display:none;">
-          <div class="summary-bar">
-            <div>
-              <strong data-i18n="inspect-loaded-badge">Pack Loaded:</strong>
-              <span class="summary-badge" id="inspectSummaryBadge">0 files</span>
+          <!-- Hidden inputs -->
+          <input type="file" id="zipOrFilesInput" accept=".zip,.ochpack" style="display:none">
+          <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
+          <input type="file" id="customPackPngInput" accept="image/png,image/jpeg,image/webp" style="display:none">
+
+          <!-- Dropzone -->
+          <div class="dropzone" id="createDropzone">
+            <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div class="dropzone-text" data-i18n="create-dropzone-text">
+              Drag & drop your texture pack (.ZIP or folder) here, or tap to choose
             </div>
-            <div id="inspectMetaType" style="color:#aaa; font-size:11px;">type=texturepack</div>
+            <div class="dropzone-actions">
+              <button type="button" class="legacy-btn" id="btnSelectZip" data-i18n="btn-select-zip">
+                <i class="fa-solid fa-file-zipper"></i> Select .ZIP Pack (Mobile & PC)
+              </button>
+              <button type="button" class="legacy-btn" id="btnSelectFolder" data-i18n="btn-select-folder">
+                <i class="fa-solid fa-folder-tree"></i> Select Folder (PC)
+              </button>
+            </div>
           </div>
 
-          <div class="form-group" style="margin-bottom: 12px;">
-            <input type="search" class="form-input" id="searchInspectFiles" placeholder="Filter files (e.g., terrain.png, font, gui)..." data-i18n-ph="search-inspect-placeholder">
+          <!-- PS2 Texture Pack Live Preview Card -->
+          <div class="ps2-preview-section">
+            <div class="ps2-preview-title" data-i18n="ps2-preview-heading">PS2 Texture Pack Preview (Live In-Game Look):
+            </div>
+            <div class="ps2-pack-card" id="previewPackCard">
+              <div class="pack-thumbnail-wrap" id="packThumbnailWrap" title="Click to upload custom pack.png">
+                <img class="pack-thumbnail-img" id="previewPackImg" src="" alt="pack.png" style="display:none;">
+                <div id="previewPackImgFallback" style="font-size:28px; color:#555;"><i class="fa-solid fa-image"></i>
+                </div>
+                <div class="pack-thumbnail-overlay">
+                  <i class="fa-solid fa-camera"></i>
+                  <span data-i18n="btn-change-icon">Change icon</span>
+                </div>
+              </div>
+              <div class="pack-details-content">
+                <h2 class="pack-card-name" id="previewCardName">Default Texture Pack</h2>
+                <p class="pack-card-desc1" id="previewCardDesc1">Standard Minecraft look & feel</p>
+                <p class="pack-card-desc2" id="previewCardDesc2">By Heritage Team</p>
+                <div class="pack-meta-pills" id="previewCardPills">
+                  <span class="pack-pill ps2">PS2 · type=texturepack</span>
+                  <span class="pack-pill res" id="pillResolution">Res: 16x (Optimal)</span>
+                  <span class="pack-pill files" id="pillFileCount">0 files</span>
+                  <span class="pack-pill clean" id="pillCleanCount" style="display:none;">0 cleaned</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="file-list-container">
-            <table class="file-table" id="inspectFileTable">
-              <thead>
-                <tr>
-                  <th style="width: 65%;" data-i18n="th-path">Path / File</th>
-                  <th style="width: 20%;" data-i18n="th-size">Size</th>
-                  <th style="width: 15%; text-align: center;" data-i18n="th-action">Action</th>
-                </tr>
-              </thead>
-              <tbody id="inspectFileListBody">
-                <!-- Injected dynamically -->
-              </tbody>
-            </table>
+          <!-- Metadata Form -->
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="inputPackName" data-i18n="label-pack-name">Pack Name (Display in
+                PS2):</label>
+              <input type="text" class="form-input" id="inputPackName" placeholder="DarkCraft" maxlength="34">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputPackId" data-i18n="label-pack-id">Internal ID (Lowercase, no
+                spaces):</label>
+              <input type="text" class="form-input" id="inputPackId" placeholder="darkcraft" pattern="[a-zA-Z0-9_\-]+">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputPackAuthor" data-i18n="label-pack-author">Author / Creator:</label>
+              <input type="text" class="form-input" id="inputPackAuthor" placeholder="DarkCraft Team" maxlength="34">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputPackVersion" data-i18n="label-pack-version">Version:</label>
+              <input type="text" class="form-input" id="inputPackVersion" placeholder="1.2.5" value="1.2.5">
+            </div>
           </div>
 
-          <div style="display:flex; justify-content:center; gap:12px; margin-top:16px; flex-wrap:wrap;">
-            <button type="button" class="legacy-btn success" id="btnExportZip" data-i18n="btn-export-zip">
-              <i class="fa-solid fa-file-zipper"></i> Download All as .ZIP
+          <div class="form-group">
+            <label class="form-label" for="inputPackDesc1" data-i18n="label-pack-desc1">Description (Line 1 - max 34
+              chars):</label>
+            <input type="text" class="form-input" id="inputPackDesc1" placeholder="Dark, clean, & retro" maxlength="34">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputPackDesc2" data-i18n="label-pack-desc2">Subtitle / Details (Line 2 - max
+              34 chars):</label>
+            <input type="text" class="form-input" id="inputPackDesc2" placeholder="(16-Bit Clouds) for PS2"
+              maxlength="34">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputOutputName" data-i18n="label-output-name">Output file name
+              (.ochpack):</label>
+            <input type="text" class="form-input" id="inputOutputName" placeholder="DarkCraft.ochpack">
+          </div>
+
+          <!-- PS2 Optimization Toggles -->
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkCleanClass" checked>
+              <span data-i18n="chk-clean-classes">Clean incompatible Java files (.class, paulscode, com/jcraft) and OS
+                junk (.DS_Store, Thumbs.db)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkGenerateMeta" checked>
+              <span data-i18n="chk-gen-meta">Generate official mod.info and pack.txt formatted for PS2 runtime</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkResizePackPng" checked>
+              <span data-i18n="chk-resize-icon">Ensure pack.png thumbnail is 128x128 pixels (PS2 recommended
+                limit)</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkStripWrapper" checked>
+              <span data-i18n="chk-strip-wrapper">Normalize folder structure (remove redundant outer folder wrapper if
+                present)</span>
+            </label>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <button type="button" class="legacy-btn primary" id="btnStartBuild" style="min-width: 260px;"
+              data-i18n="btn-start-build">
+              <i class="fa-solid fa-bolt"></i> Build & Download .ochpack
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- Bottom Progress Bar & Monospace Terminal Console (Shared across tabs) -->
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressBarFill"></div>
-        </div>
-        <div class="status-text" id="statusText" data-i18n="status-ready">Ready.</div>
+        <!-- TAB 2: Inspeccionar / Editar .ochpack -->
+        <div class="tab-pane" id="tabInspect">
+          <div class="info-card">
+            <p><strong data-i18n="inspect-info-title">Inspect, tweak, and re-export any existing .ochpack file.</strong>
+            </p>
+            <p data-i18n="inspect-info-desc">Load any .ochpack (e.g., DarkCraft.ochpack) to edit metadata, replace
+              thumbnails, search internal textures, or extract everything to .ZIP.</p>
+          </div>
 
-        <div class="log-box-header">
-          <span data-i18n="log-title">Activity Log (Console):</span>
-          <div class="log-actions">
-            <button type="button" class="log-mini-btn" id="btnCopyLog" data-i18n="btn-copy-log">Copy</button>
-            <button type="button" class="log-mini-btn" id="btnClearLog" data-i18n="btn-clear-log">Clear</button>
+          <input type="file" id="inspectFileInput" accept=".ochpack,.zip" style="display:none">
+
+          <!-- Dropzone for inspecting -->
+          <div class="dropzone" id="inspectDropzone">
+            <div class="dropzone-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div class="dropzone-text" data-i18n="inspect-dropzone-text">
+              Drag & drop an existing .ochpack file here, or tap to browse
+            </div>
+            <div class="dropzone-actions">
+              <button type="button" class="legacy-btn" id="btnSelectInspect" data-i18n="btn-select-inspect">
+                <i class="fa-solid fa-file-import"></i> Browse .ochpack file...
+              </button>
+            </div>
+          </div>
+
+          <!-- Inspect Results Section -->
+          <div id="inspectDetailsSection" style="display:none;">
+            <div class="summary-bar">
+              <div>
+                <strong data-i18n="inspect-loaded-badge">Pack Loaded:</strong>
+                <span class="summary-badge" id="inspectSummaryBadge">0 files</span>
+              </div>
+              <div id="inspectMetaType" style="color:#aaa; font-size:11px;">type=texturepack</div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <input type="search" class="form-input" id="searchInspectFiles"
+                placeholder="Filter files (e.g., terrain.png, font, gui)..." data-i18n-ph="search-inspect-placeholder">
+            </div>
+
+            <div class="file-list-container">
+              <table class="file-table" id="inspectFileTable">
+                <thead>
+                  <tr>
+                    <th style="width: 65%;" data-i18n="th-path">Path / File</th>
+                    <th style="width: 20%;" data-i18n="th-size">Size</th>
+                    <th style="width: 15%; text-align: center;" data-i18n="th-action">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="inspectFileListBody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:12px; margin-top:16px; flex-wrap:wrap;">
+              <button type="button" class="legacy-btn success" id="btnExportZip" data-i18n="btn-export-zip">
+                <i class="fa-solid fa-file-zipper"></i> Download All as .ZIP
+              </button>
+            </div>
           </div>
         </div>
-        <div class="log-terminal" id="logTerminal"></div>
-      </div>
-    </section>
-  </main>
-</div>
 
-<!-- Minecraft version disclaimer in bottom-left -->
-<aside class="minecraft-version-text" id="minecraft-version-text">
-  <div class="version-title">OC Heritage Developer Community</div>
-  <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer Community.<br>Not affiliated with Optiprojects.</div>
-</aside>
+        <!-- Bottom Progress Bar & Monospace Terminal Console (Shared across tabs) -->
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBarFill"></div>
+          </div>
+          <div class="status-text" id="statusText" data-i18n="status-ready">Ready.</div>
 
-<!-- Discord corner button in bottom-right -->
-<a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord">
-  <i class="fa-brands fa-discord" aria-hidden="true"></i>
-  <span>Discord</span>
-</a>
+          <div class="log-box-header">
+            <span data-i18n="log-title">Activity Log (Console):</span>
+            <div class="log-actions">
+              <button type="button" class="log-mini-btn" id="btnCopyLog" data-i18n="btn-copy-log">Copy</button>
+              <button type="button" class="log-mini-btn" id="btnClearLog" data-i18n="btn-clear-log">Clear</button>
+            </div>
+          </div>
+          <div class="log-terminal" id="logTerminal"></div>
+        </div>
+      </section>
+    </main>
+  </div>
 
-<script src="ochpack-tool.js"></script>
+  <!-- Minecraft version disclaimer in bottom-left -->
+  <aside class="minecraft-version-text" id="minecraft-version-text">
+    <div class="version-title">OC Heritage Developer Community</div>
+    <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer
+      Community.<br>Not affiliated with Optiprojects.</div>
+  </aside>
+
+  <!-- Discord corner button in bottom-right -->
+  <a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord">
+    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+    <span>Discord</span>
+  </a>
+
+  <script src="js/ochpack-tool.js"></script>
 </body>
+
 </html>

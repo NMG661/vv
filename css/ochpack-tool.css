@@ -1,14 +1,20 @@
 /* OptiCraft Heritage - OCHPACK Texture Pack Tool (PS2) Styles */
 @font-face {
   font-family: Minecraft;
-  src: url("Minecraft-Regular.ttf") format("truetype");
+  src: url("../fonts/Minecraft-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: #111;
@@ -17,7 +23,12 @@ body {
   image-rendering: pixelated;
   min-height: 100vh;
 }
-button, a, input, select, textarea {
+
+button,
+a,
+input,
+select,
+textarea {
   font: inherit;
   font-family: Minecraft, Arial, Helvetica, sans-serif;
 }
@@ -29,6 +40,7 @@ button, a, input, select, textarea {
   background: #111;
   padding-bottom: 70px;
 }
+
 .panorama {
   position: fixed;
   inset: 0;
@@ -36,6 +48,7 @@ button, a, input, select, textarea {
   z-index: 0;
   background: #111;
 }
+
 .panorama-track {
   position: absolute;
   top: 0;
@@ -45,6 +58,7 @@ button, a, input, select, textarea {
   display: flex;
   animation: tu12-panorama 35s linear infinite;
 }
+
 .panorama-track img {
   display: block;
   flex: 0 0 50%;
@@ -54,20 +68,28 @@ button, a, input, select, textarea {
   object-fit: cover;
   object-position: center;
 }
+
 .panorama-track img:nth-child(2) {
   transform: scaleX(-1);
 }
+
 @keyframes tu12-panorama {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
+
 .panorama-shade {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.7)),
-              linear-gradient(90deg, rgba(0,0,0,.25), transparent 35%, transparent 65%, rgba(0,0,0,.25));
+  background: linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .7)),
+    linear-gradient(90deg, rgba(0, 0, 0, .25), transparent 35%, transparent 65%, rgba(0, 0, 0, .25));
 }
 
 /* Header Bar */
@@ -83,12 +105,14 @@ button, a, input, select, textarea {
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .nav-buttons-group {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
+
 .nav-back-btn {
   display: inline-flex;
   align-items: center;
@@ -97,30 +121,41 @@ button, a, input, select, textarea {
   text-decoration: none;
   background: #555;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   padding: 8px 12px;
   font-size: 13px;
   text-shadow: 2px 2px #222;
   transition: background .15s ease, transform .05s ease;
   user-select: none;
 }
-.nav-back-btn:hover { background: #777; }
-.nav-back-btn:active { transform: translate(1px, 1px); }
+
+.nav-back-btn:hover {
+  background: #777;
+}
+
+.nav-back-btn:active {
+  transform: translate(1px, 1px);
+}
+
 .nav-back-btn.accent {
   background: #3c5270;
-  box-shadow: inset 2px 2px #6284b3, inset -2px -2px #182333, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #6284b3, inset -2px -2px #182333, 2px 2px rgba(0, 0, 0, .6);
 }
-.nav-back-btn.accent:hover { background: #4d688e; }
+
+.nav-back-btn.accent:hover {
+  background: #4d688e;
+}
 
 .lang-switcher {
   display: flex;
   gap: 8px;
 }
+
 .lang-btn {
   background: #4a4a4a;
   color: #fff;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   padding: 4px 6px;
   cursor: pointer;
   display: inline-flex;
@@ -129,14 +164,27 @@ button, a, input, select, textarea {
   user-select: none;
   transition: background .15s ease, transform .05s ease;
 }
-.lang-btn:hover { background: #666; }
+
+.lang-btn:hover {
+  background: #666;
+}
+
 .lang-btn.active {
   background: #777;
-  outline: 2px solid rgba(255,255,255,.8);
+  outline: 2px solid rgba(255, 255, 255, .8);
   box-shadow: inset 2px 2px #222, inset -2px -2px #aaa;
 }
-.lang-btn:active { transform: translate(1px, 1px); }
-.lang-flag { display: block; width: 28px; height: 28px; object-fit: contain; }
+
+.lang-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.lang-flag {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
 
 /* Main Container */
 .tool-container {
@@ -150,6 +198,7 @@ button, a, input, select, textarea {
   text-align: center;
   margin-bottom: 18px;
 }
+
 .ps2-badge-header {
   display: inline-block;
   background: #003791;
@@ -162,6 +211,7 @@ button, a, input, select, textarea {
   margin-bottom: 8px;
   text-transform: uppercase;
 }
+
 .tool-title {
   font-size: clamp(20px, 4vw, 28px);
   margin: 0 0 8px;
@@ -169,6 +219,7 @@ button, a, input, select, textarea {
   color: #fff;
   letter-spacing: 0.5px;
 }
+
 .tool-subtitle {
   font-size: clamp(12px, 2.5vw, 15px);
   color: #ccc;
@@ -179,9 +230,9 @@ button, a, input, select, textarea {
 
 /* Panel Box */
 .legacy-panel {
-  background: rgba(36,36,36,.96);
+  background: rgba(36, 36, 36, .96);
   border: 3px solid #111;
-  box-shadow: inset 2px 2px #666, inset -2px -2px #171717, 7px 7px rgba(0,0,0,.5);
+  box-shadow: inset 2px 2px #666, inset -2px -2px #171717, 7px 7px rgba(0, 0, 0, .5);
   padding: 22px;
 }
 
@@ -194,13 +245,14 @@ button, a, input, select, textarea {
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
+
 .tab-btn {
   flex: 1 1 180px;
   padding: 12px 14px;
   background: #555;
   color: #ccc;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   cursor: pointer;
   text-shadow: 2px 2px #222;
   font-size: clamp(12px, 2.5vw, 14px);
@@ -212,20 +264,23 @@ button, a, input, select, textarea {
   transition: all .15s ease;
   user-select: none;
 }
+
 .tab-btn:hover {
   background: #6e6e6e;
   color: #fff;
 }
+
 .tab-btn.active {
   background: #858585;
   color: #fff;
-  outline: 2px solid rgba(255,255,255,.6);
+  outline: 2px solid rgba(255, 255, 255, .6);
   box-shadow: inset 2px 2px #333, inset -2px -2px #aaa;
 }
 
 .tab-pane {
   display: none;
 }
+
 .tab-pane.active {
   display: block;
 }
@@ -242,13 +297,24 @@ button, a, input, select, textarea {
   color: #ddd;
   text-shadow: 1px 1px #111;
 }
-.info-card p { margin: 0 0 6px; }
-.info-card p:last-child { margin: 0; }
-.info-card strong { color: #fff; }
+
+.info-card p {
+  margin: 0 0 6px;
+}
+
+.info-card p:last-child {
+  margin: 0;
+}
+
+.info-card strong {
+  color: #fff;
+}
+
 .info-card.warning {
   border-left: 4px solid #e5a700;
   background: rgba(45, 38, 15, 0.75);
 }
+
 .info-card.info {
   border-left: 4px solid #3388ff;
   background: rgba(18, 32, 55, 0.75);
@@ -265,21 +331,26 @@ button, a, input, select, textarea {
   margin-bottom: 18px;
   border-radius: 2px;
 }
-.dropzone:hover, .dropzone.dragover {
+
+.dropzone:hover,
+.dropzone.dragover {
   border-color: #55aaff;
   background: rgba(35, 45, 60, 0.85);
 }
+
 .dropzone-icon {
   font-size: 38px;
   color: #88aacc;
   margin-bottom: 10px;
 }
+
 .dropzone-text {
   font-size: 14px;
   color: #eee;
   margin-bottom: 14px;
   line-height: 1.4;
 }
+
 .dropzone-actions {
   display: flex;
   justify-content: center;
@@ -292,7 +363,7 @@ button, a, input, select, textarea {
   background: #555;
   color: #fff;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   padding: 10px 18px;
   font-size: 13px;
   cursor: pointer;
@@ -304,22 +375,37 @@ button, a, input, select, textarea {
   gap: 8px;
   user-select: none;
 }
-.legacy-btn:hover { background: #6e6e6e; }
-.legacy-btn:active { transform: translate(1px, 1px); }
+
+.legacy-btn:hover {
+  background: #6e6e6e;
+}
+
+.legacy-btn:active {
+  transform: translate(1px, 1px);
+}
+
 .legacy-btn.primary {
   background: #3b6ea5;
-  box-shadow: inset 2px 2px #6da5e0, inset -2px -2px #1c395c, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #6da5e0, inset -2px -2px #1c395c, 2px 2px rgba(0, 0, 0, .6);
   font-size: 15px;
   font-weight: bold;
 }
-.legacy-btn.primary:hover { background: #4b84c4; }
+
+.legacy-btn.primary:hover {
+  background: #4b84c4;
+}
+
 .legacy-btn.success {
   background: #3b853b;
-  box-shadow: inset 2px 2px #6ad16a, inset -2px -2px #1f4a1f, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #6ad16a, inset -2px -2px #1f4a1f, 2px 2px rgba(0, 0, 0, .6);
   font-size: 15px;
   font-weight: bold;
 }
-.legacy-btn.success:hover { background: #4ca64c; }
+
+.legacy-btn.success:hover {
+  background: #4ca64c;
+}
+
 .legacy-btn:disabled {
   background: #3a3a3a;
   color: #888;
@@ -333,6 +419,7 @@ button, a, input, select, textarea {
 .ps2-preview-section {
   margin-bottom: 20px;
 }
+
 .ps2-preview-title {
   font-size: 12px;
   color: #aaa;
@@ -340,20 +427,23 @@ button, a, input, select, textarea {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 .ps2-pack-card {
   display: flex;
   gap: 16px;
   background: rgba(18, 18, 18, 0.9);
   border: 2px solid #2f2f2f;
-  box-shadow: inset 2px 2px #111, inset -2px -2px #444, 2px 2px rgba(0,0,0,.5);
+  box-shadow: inset 2px 2px #111, inset -2px -2px #444, 2px 2px rgba(0, 0, 0, .5);
   padding: 14px;
   align-items: flex-start;
   position: relative;
   transition: border-color .2s ease;
 }
+
 .ps2-pack-card:hover {
   border-color: #555;
 }
+
 .pack-thumbnail-wrap {
   position: relative;
   flex: 0 0 96px;
@@ -369,6 +459,7 @@ button, a, input, select, textarea {
   overflow: hidden;
   user-select: none;
 }
+
 .pack-thumbnail-img {
   width: 100%;
   height: 100%;
@@ -376,10 +467,11 @@ button, a, input, select, textarea {
   image-rendering: pixelated;
   display: block;
 }
+
 .pack-thumbnail-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -392,9 +484,11 @@ button, a, input, select, textarea {
   padding: 4px;
   gap: 4px;
 }
+
 .pack-thumbnail-wrap:hover .pack-thumbnail-overlay {
   opacity: 1;
 }
+
 .pack-details-content {
   flex: 1;
   min-width: 0;
@@ -402,14 +496,17 @@ button, a, input, select, textarea {
   flex-direction: column;
   gap: 4px;
 }
+
 .pack-card-name {
   font-size: 16px;
   font-weight: bold;
-  color: #ffff55; /* Minecraft gold/yellow name */
+  color: #ffff55;
+  /* Minecraft gold/yellow name */
   text-shadow: 2px 2px #222;
   margin: 0;
   word-break: break-word;
 }
+
 .pack-card-desc1 {
   font-size: 13px;
   color: #e0e0e0;
@@ -417,6 +514,7 @@ button, a, input, select, textarea {
   text-shadow: 1px 1px #111;
   word-break: break-word;
 }
+
 .pack-card-desc2 {
   font-size: 12px;
   color: #888;
@@ -424,12 +522,14 @@ button, a, input, select, textarea {
   text-shadow: 1px 1px #111;
   word-break: break-word;
 }
+
 .pack-meta-pills {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
   margin-top: 6px;
 }
+
 .pack-pill {
   font-size: 10px;
   padding: 2px 8px;
@@ -438,25 +538,30 @@ button, a, input, select, textarea {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
 .pack-pill.ps2 {
   background: #003791;
   color: #fff;
   border-color: #002566;
 }
+
 .pack-pill.res {
   background: #235223;
   color: #bbfebb;
   border-color: #173b17;
 }
+
 .pack-pill.res.warn {
   background: #735100;
   color: #ffebb3;
   border-color: #4a3400;
 }
+
 .pack-pill.files {
   background: #333;
   color: #bbb;
 }
+
 .pack-pill.clean {
   background: #502727;
   color: #ffc4c4;
@@ -470,9 +575,11 @@ button, a, input, select, textarea {
   gap: 14px;
   margin-bottom: 16px;
 }
+
 .form-group {
   margin-bottom: 14px;
 }
+
 .form-label {
   display: block;
   font-size: 12px;
@@ -480,7 +587,9 @@ button, a, input, select, textarea {
   margin-bottom: 6px;
   text-shadow: 1px 1px #111;
 }
-.form-input, .form-textarea {
+
+.form-input,
+.form-textarea {
   width: 100%;
   background: #111;
   color: #fff;
@@ -490,10 +599,13 @@ button, a, input, select, textarea {
   font-size: 13px;
   transition: border-color .15s ease;
 }
-.form-input:focus, .form-textarea:focus {
+
+.form-input:focus,
+.form-textarea:focus {
   outline: none;
   border-color: #55aaff;
 }
+
 .form-textarea {
   min-height: 60px;
   resize: vertical;
@@ -508,6 +620,7 @@ button, a, input, select, textarea {
   flex-direction: column;
   gap: 8px;
 }
+
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -517,6 +630,7 @@ button, a, input, select, textarea {
   cursor: pointer;
   user-select: none;
 }
+
 .checkbox-label input[type="checkbox"] {
   width: 16px;
   height: 16px;
@@ -537,6 +651,7 @@ button, a, input, select, textarea {
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .summary-badge {
   background: #333;
   padding: 2px 6px;
@@ -553,12 +668,14 @@ button, a, input, select, textarea {
   background: #111;
   margin-bottom: 14px;
 }
+
 .file-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
   text-align: left;
 }
+
 .file-table th {
   background: #252525;
   color: #aaa;
@@ -568,14 +685,17 @@ button, a, input, select, textarea {
   border-bottom: 2px solid #333;
   z-index: 1;
 }
+
 .file-table td {
   padding: 6px 10px;
   border-bottom: 1px solid #1f1f1f;
   color: #ddd;
 }
+
 .file-table tr:hover td {
   background: rgba(255, 255, 255, 0.05);
 }
+
 .file-action-btn {
   background: #444;
   color: #fff;
@@ -585,7 +705,10 @@ button, a, input, select, textarea {
   cursor: pointer;
   box-shadow: inset 1px 1px #666, inset -1px -1px #111;
 }
-.file-action-btn:hover { background: #555; }
+
+.file-action-btn:hover {
+  background: #555;
+}
 
 /* Progress & Log */
 .progress-container {
@@ -593,6 +716,7 @@ button, a, input, select, textarea {
   border-top: 2px solid #222;
   padding-top: 18px;
 }
+
 .progress-bar {
   height: 18px;
   background: #111;
@@ -602,12 +726,14 @@ button, a, input, select, textarea {
   margin-bottom: 8px;
   position: relative;
 }
+
 .progress-fill {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #2b7a2b, #4ca64c);
   transition: width 0.15s ease-out;
 }
+
 .status-text {
   font-size: 12px;
   color: #bbb;
@@ -623,10 +749,12 @@ button, a, input, select, textarea {
   color: #aaa;
   margin-bottom: 6px;
 }
+
 .log-actions {
   display: flex;
   gap: 6px;
 }
+
 .log-mini-btn {
   background: #333;
   color: #bbb;
@@ -636,7 +764,11 @@ button, a, input, select, textarea {
   font-size: 11px;
   cursor: pointer;
 }
-.log-mini-btn:hover { background: #444; color: #fff; }
+
+.log-mini-btn:hover {
+  background: #444;
+  color: #fff;
+}
 
 .log-terminal {
   height: 140px;
@@ -666,8 +798,15 @@ button, a, input, select, textarea {
   font-size: 12px;
   line-height: 1.3;
 }
-.version-title { font-weight: bold; }
-.version-disclaimer { color: #ccc; font-size: 11px; }
+
+.version-title {
+  font-weight: bold;
+}
+
+.version-disclaimer {
+  color: #ccc;
+  font-size: 11px;
+}
 
 .discord-corner-btn {
   position: fixed;
@@ -682,13 +821,19 @@ button, a, input, select, textarea {
   text-decoration: none;
   padding: 6px 12px;
   border: 2px solid #23272a;
-  box-shadow: inset 1px 1px rgba(255,255,255,.3), inset -1px -1px rgba(0,0,0,.4), 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 1px 1px rgba(255, 255, 255, .3), inset -1px -1px rgba(0, 0, 0, .4), 2px 2px rgba(0, 0, 0, .6);
   font-size: 12px;
   text-shadow: 1px 1px #000;
   transition: transform .1s ease, background .15s ease;
 }
-.discord-corner-btn:hover { background: #4752c4; }
-.discord-corner-btn:active { transform: translate(1px, 1px); }
+
+.discord-corner-btn:hover {
+  background: #4752c4;
+}
+
+.discord-corner-btn:active {
+  transform: translate(1px, 1px);
+}
 
 /* Responsive adjustments */
 @media (max-width: 680px) {
@@ -696,25 +841,31 @@ button, a, input, select, textarea {
     flex-direction: column;
     align-items: stretch;
   }
+
   .nav-buttons-group {
     justify-content: space-between;
   }
+
   .lang-switcher {
     align-self: flex-end;
   }
+
   .ps2-pack-card {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
+
   .pack-meta-pills {
     justify-content: center;
   }
+
   .minecraft-version-text {
     position: static;
     margin: 20px auto 10px;
     text-align: center;
   }
+
   .discord-corner-btn {
     position: static;
     margin: 0 auto 30px;

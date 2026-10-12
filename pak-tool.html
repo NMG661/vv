@@ -1,209 +1,228 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" id="meta-desc" content="OptiCraft Heritage — Web tool to pack and unpack assets.pak archives (MCPK v1).">
-<title>OptiCraft Heritage — Assets.pak Tool</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="pak-tool.css">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="meta-desc"
+    content="OptiCraft Heritage — Web tool to pack and unpack assets.pak archives (MCPK v1).">
+  <title>OptiCraft Heritage — Assets.pak Tool</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/pak-tool.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="js/jszip.min.js"></script>
 </head>
+
 <body>
-<div class="screen">
-  <div class="panorama" aria-hidden="true">
-    <div class="panorama-track">
-      <img src="TU12_Panorama_Background_S.png" alt="">
-      <img src="TU12_Panorama_Background_S.png" alt="">
+  <div class="screen">
+    <div class="panorama" aria-hidden="true">
+      <div class="panorama-track">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+      </div>
     </div>
-  </div>
-  <div class="panorama-shade" aria-hidden="true"></div>
+    <div class="panorama-shade" aria-hidden="true"></div>
 
-  <!-- Top Navigation -->
-  <header class="top-nav">
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <a class="nav-back-btn" href="index.html" id="btn-back-portal">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span data-i18n="back-portal">BACK TO PORTAL</span>
-      </a>
-      <a class="nav-back-btn" href="ochpack-tool.html" id="btn-goto-ochpack" style="background:#3c5270;">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span data-i18n="goto-ochpack">OCHPACK CREATOR (PS2)</span>
-      </a>
-    </div>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
-        <img class="lang-flag" src="flag-us.png" alt="English">
-      </button>
-      <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
-        <img class="lang-flag" src="flag-ar.png" alt="Español">
-      </button>
-    </div>
-  </header>
-
-  <main class="tool-container">
-    <div class="tool-header">
-      <h1 class="tool-title" data-i18n="tool-title">OPTICRAFT HERITAGE - GESTOR DE ASSETS.PAK</h1>
-      <p class="tool-subtitle" data-i18n="tool-subtitle">Empaquetador y Desempaquetador de recursos para PS2, PSP, Wii y PC</p>
-    </div>
-
-    <section class="legacy-panel">
-      <!-- Tabs Navigation -->
-      <nav class="tabs-nav" role="tablist">
-        <button class="tab-btn active" id="tabBtnPack" data-tab="tabPack">
-          <i class="fa-solid fa-box-archive"></i>
-          <span data-i18n="tab-pack">📦 Empaquetar a .pak</span>
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a class="nav-back-btn" href="index.html" id="btn-back-portal">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="back-portal">BACK TO PORTAL</span>
+        </a>
+        <a class="nav-back-btn" href="ochpack-tool.html" id="btn-goto-ochpack" style="background:#3c5270;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-i18n="goto-ochpack">OCHPACK CREATOR (PS2)</span>
+        </a>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
+          <img class="lang-flag" src="images/flag-us.png" alt="English">
         </button>
-        <button class="tab-btn" id="tabBtnUnpack" data-tab="tabUnpack">
-          <i class="fa-solid fa-folder-open"></i>
-          <span data-i18n="tab-unpack">📂 Desempaquetar .pak</span>
+        <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
+          <img class="lang-flag" src="images/flag-ar.png" alt="Español">
         </button>
-      </nav>
+      </div>
+    </header>
 
-      <!-- TAB 1: Empaquetar a .pak -->
-      <div class="tab-pane active" id="tabPack">
-        <div class="info-card">
-          <p><strong data-i18n="pack-info-title">Selecciona los recursos para generar el archivo 'assets.pak' correspondiente.</strong></p>
-          <p data-i18n="pack-info-desc">Puedes seleccionar una carpeta entera de recursos, múltiples archivos, o subir un archivo .ZIP conteniendo la estructura de carpetas (ideal para móviles y tablets).</p>
-        </div>
+    <main class="tool-container">
+      <div class="tool-header">
+        <h1 class="tool-title" data-i18n="tool-title">OPTICRAFT HERITAGE - GESTOR DE ASSETS.PAK</h1>
+        <p class="tool-subtitle" data-i18n="tool-subtitle">Empaquetador y Desempaquetador de recursos para PS2, PSP, Wii
+          y PC</p>
+      </div>
 
-        <!-- Hidden file inputs -->
-        <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
-        <input type="file" id="filesInput" multiple style="display:none">
-
-        <!-- Dropzone -->
-        <div class="dropzone" id="packDropzone">
-          <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-          <div class="dropzone-text" data-i18n="pack-dropzone-text">
-            Arrastra y suelta aquí tu carpeta de recursos, archivos o archivo .ZIP
-          </div>
-          <div class="dropzone-actions">
-            <button type="button" class="legacy-btn" id="btnSelectFolder" data-i18n="btn-select-folder">
-              <i class="fa-solid fa-folder-tree"></i> Seleccionar Carpeta (PC)
-            </button>
-            <button type="button" class="legacy-btn" id="btnSelectFiles" data-i18n="btn-select-files">
-              <i class="fa-solid fa-file-zipper"></i> Seleccionar Archivos o ZIP
-            </button>
-          </div>
-        </div>
-
-        <!-- Summary & Config -->
-        <div class="summary-bar" id="packSummaryBar">
-          <div><strong data-i18n="pack-files-ready">Archivos preparados:</strong> <span class="summary-badge" id="packFileCount">0 archivos (0 KB)</span></div>
-          <button type="button" class="log-mini-btn" id="btnClearPackFiles" style="display:none" data-i18n="btn-clear-selection">Limpiar selección</button>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="packOutputName" data-i18n="label-output-name">Nombre del archivo de salida:</label>
-          <input type="text" class="form-input" id="packOutputName" value="assets.pak" placeholder="assets.pak">
-        </div>
-
-        <div class="form-group">
-          <label class="checkbox-label">
-            <input type="checkbox" id="packExcludeTutorial" checked>
-            <span data-i18n="chk-exclude-temp">Excluir archivos temporales innecesarios (session.lock, level.dat_old/mcr)</span>
-          </label>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-          <button type="button" class="legacy-btn primary" id="btnStartPack" style="min-width: 240px;" data-i18n="btn-start-pack">
-            <i class="fa-solid fa-bolt"></i> Iniciar Empaquetado
+      <section class="legacy-panel">
+        <!-- Tabs Navigation -->
+        <nav class="tabs-nav" role="tablist">
+          <button class="tab-btn active" id="tabBtnPack" data-tab="tabPack">
+            <i class="fa-solid fa-box-archive"></i>
+            <span data-i18n="tab-pack">📦 Empaquetar a .pak</span>
           </button>
-        </div>
-      </div>
+          <button class="tab-btn" id="tabBtnUnpack" data-tab="tabUnpack">
+            <i class="fa-solid fa-folder-open"></i>
+            <span data-i18n="tab-unpack">📂 Desempaquetar .pak</span>
+          </button>
+        </nav>
 
-      <!-- TAB 2: Desempaquetar .pak -->
-      <div class="tab-pane" id="tabUnpack">
-        <div class="info-card">
-          <p><strong data-i18n="unpack-info-title">Selecciona un archivo .pak (ej. 'assets.pak') para extraer su contenido.</strong></p>
-          <p data-i18n="unpack-info-desc">Podrás explorar todas las texturas, modelos, sonidos y archivos de configuración, descargar archivos individuales o exportar todo como un archivo .ZIP listo para descomprimir.</p>
-        </div>
-
-        <input type="file" id="pakInput" accept=".pak" style="display:none">
-
-        <!-- Dropzone for .pak -->
-        <div class="dropzone" id="unpackDropzone">
-          <div class="dropzone-icon"><i class="fa-solid fa-box-open"></i></div>
-          <div class="dropzone-text" data-i18n="unpack-dropzone-text">
-            Arrastra y suelta tu archivo .pak aquí o pulsa para seleccionarlo
+        <!-- TAB 1: Empaquetar a .pak -->
+        <div class="tab-pane active" id="tabPack">
+          <div class="info-card">
+            <p><strong data-i18n="pack-info-title">Selecciona los recursos para generar el archivo 'assets.pak'
+                correspondiente.</strong></p>
+            <p data-i18n="pack-info-desc">Puedes seleccionar una carpeta entera de recursos, múltiples archivos, o subir
+              un archivo .ZIP conteniendo la estructura de carpetas (ideal para móviles y tablets).</p>
           </div>
-          <div class="dropzone-actions">
-            <button type="button" class="legacy-btn" id="btnSelectPak" data-i18n="btn-select-pak">
-              <i class="fa-solid fa-file-import"></i> Buscar archivo .pak...
-            </button>
-          </div>
-        </div>
 
-        <!-- Pak Info & File List (shown after loading pak) -->
-        <div id="pakDetailsSection" style="display:none">
-          <div class="summary-bar">
-            <div>
-              <strong data-i18n="pak-info-count">Contenido:</strong>
-              <span class="summary-badge" id="pakSummaryBadge">0 archivos</span>
+          <!-- Hidden file inputs -->
+          <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none">
+          <input type="file" id="filesInput" multiple style="display:none">
+
+          <!-- Dropzone -->
+          <div class="dropzone" id="packDropzone">
+            <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div class="dropzone-text" data-i18n="pack-dropzone-text">
+              Arrastra y suelta aquí tu carpeta de recursos, archivos o archivo .ZIP
             </div>
-            <div id="pakMetaInfo" style="color:#aaa; font-size:11px;"></div>
+            <div class="dropzone-actions">
+              <button type="button" class="legacy-btn" id="btnSelectFolder" data-i18n="btn-select-folder">
+                <i class="fa-solid fa-folder-tree"></i> Seleccionar Carpeta (PC)
+              </button>
+              <button type="button" class="legacy-btn" id="btnSelectFiles" data-i18n="btn-select-files">
+                <i class="fa-solid fa-file-zipper"></i> Seleccionar Archivos o ZIP
+              </button>
+            </div>
           </div>
 
-          <div class="form-group" style="margin-bottom: 10px;">
-            <input type="search" class="form-input" id="searchPakFiles" placeholder="Filtrar archivos por nombre o extensión (.png, .json, .lang)..." data-i18n-ph="search-files-placeholder">
+          <!-- Summary & Config -->
+          <div class="summary-bar" id="packSummaryBar">
+            <div><strong data-i18n="pack-files-ready">Archivos preparados:</strong> <span class="summary-badge"
+                id="packFileCount">0 archivos (0 KB)</span></div>
+            <button type="button" class="log-mini-btn" id="btnClearPackFiles" style="display:none"
+              data-i18n="btn-clear-selection">Limpiar selección</button>
           </div>
 
-          <div class="file-list-container">
-            <table class="file-table" id="pakFileTable">
-              <thead>
-                <tr>
-                  <th style="width: 65%;" data-i18n="th-path">Ruta / Archivo</th>
-                  <th style="width: 20%;" data-i18n="th-size">Tamaño</th>
-                  <th style="width: 15%; text-align: center;" data-i18n="th-action">Acción</th>
-                </tr>
-              </thead>
-              <tbody id="pakFileListBody">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
+          <div class="form-group">
+            <label class="form-label" for="packOutputName" data-i18n="label-output-name">Nombre del archivo de
+              salida:</label>
+            <input type="text" class="form-input" id="packOutputName" value="assets.pak" placeholder="assets.pak">
           </div>
 
-          <div style="text-align: center; margin-top: 16px;">
-            <button type="button" class="legacy-btn success" id="btnDownloadAllZip" style="min-width: 260px;" data-i18n="btn-download-all-zip">
-              <i class="fa-solid fa-file-zipper"></i> Descargar Todo como .ZIP
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="packExcludeTutorial" checked>
+              <span data-i18n="chk-exclude-temp">Excluir archivos temporales innecesarios (session.lock,
+                level.dat_old/mcr)</span>
+            </label>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <button type="button" class="legacy-btn primary" id="btnStartPack" style="min-width: 240px;"
+              data-i18n="btn-start-pack">
+              <i class="fa-solid fa-bolt"></i> Iniciar Empaquetado
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- Bottom Progress & Log Box (Shared across tabs) -->
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressBarFill"></div>
-        </div>
-        <div class="status-text" id="statusText" data-i18n="status-ready">Listo.</div>
+        <!-- TAB 2: Desempaquetar .pak -->
+        <div class="tab-pane" id="tabUnpack">
+          <div class="info-card">
+            <p><strong data-i18n="unpack-info-title">Selecciona un archivo .pak (ej. 'assets.pak') para extraer su
+                contenido.</strong></p>
+            <p data-i18n="unpack-info-desc">Podrás explorar todas las texturas, modelos, sonidos y archivos de
+              configuración, descargar archivos individuales o exportar todo como un archivo .ZIP listo para
+              descomprimir.</p>
+          </div>
 
-        <div class="log-box-header">
-          <span data-i18n="log-title">Registro de Actividad (Consola):</span>
-          <div class="log-actions">
-            <button type="button" class="log-mini-btn" id="btnCopyLog" data-i18n="btn-copy-log">Copiar</button>
-            <button type="button" class="log-mini-btn" id="btnClearLog" data-i18n="btn-clear-log">Limpiar</button>
+          <input type="file" id="pakInput" accept=".pak" style="display:none">
+
+          <!-- Dropzone for .pak -->
+          <div class="dropzone" id="unpackDropzone">
+            <div class="dropzone-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div class="dropzone-text" data-i18n="unpack-dropzone-text">
+              Arrastra y suelta tu archivo .pak aquí o pulsa para seleccionarlo
+            </div>
+            <div class="dropzone-actions">
+              <button type="button" class="legacy-btn" id="btnSelectPak" data-i18n="btn-select-pak">
+                <i class="fa-solid fa-file-import"></i> Buscar archivo .pak...
+              </button>
+            </div>
+          </div>
+
+          <!-- Pak Info & File List (shown after loading pak) -->
+          <div id="pakDetailsSection" style="display:none">
+            <div class="summary-bar">
+              <div>
+                <strong data-i18n="pak-info-count">Contenido:</strong>
+                <span class="summary-badge" id="pakSummaryBadge">0 archivos</span>
+              </div>
+              <div id="pakMetaInfo" style="color:#aaa; font-size:11px;"></div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+              <input type="search" class="form-input" id="searchPakFiles"
+                placeholder="Filtrar archivos por nombre o extensión (.png, .json, .lang)..."
+                data-i18n-ph="search-files-placeholder">
+            </div>
+
+            <div class="file-list-container">
+              <table class="file-table" id="pakFileTable">
+                <thead>
+                  <tr>
+                    <th style="width: 65%;" data-i18n="th-path">Ruta / Archivo</th>
+                    <th style="width: 20%;" data-i18n="th-size">Tamaño</th>
+                    <th style="width: 15%; text-align: center;" data-i18n="th-action">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="pakFileListBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 16px;">
+              <button type="button" class="legacy-btn success" id="btnDownloadAllZip" style="min-width: 260px;"
+                data-i18n="btn-download-all-zip">
+                <i class="fa-solid fa-file-zipper"></i> Descargar Todo como .ZIP
+              </button>
+            </div>
           </div>
         </div>
-        <div class="log-terminal" id="logTerminal"></div>
-      </div>
-    </section>
-  </main>
-</div>
 
-<!-- Minecraft version text in bottom-left -->
-<aside class="minecraft-version-text" id="minecraft-version-text" style="display:block;">
-  <div class="version-title">OC Heritage Developer Community</div>
-  <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer Community.<br>Not affiliated with Optiprojects.</div>
-</aside>
+        <!-- Bottom Progress & Log Box (Shared across tabs) -->
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBarFill"></div>
+          </div>
+          <div class="status-text" id="statusText" data-i18n="status-ready">Listo.</div>
 
-<!-- Discord corner button in bottom-right -->
-<a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord" style="display:inline-flex;">
-  <i class="fa-brands fa-discord" aria-hidden="true"></i>
-  <span>Discord</span>
-</a>
+          <div class="log-box-header">
+            <span data-i18n="log-title">Registro de Actividad (Consola):</span>
+            <div class="log-actions">
+              <button type="button" class="log-mini-btn" id="btnCopyLog" data-i18n="btn-copy-log">Copiar</button>
+              <button type="button" class="log-mini-btn" id="btnClearLog" data-i18n="btn-clear-log">Limpiar</button>
+            </div>
+          </div>
+          <div class="log-terminal" id="logTerminal"></div>
+        </div>
+      </section>
+    </main>
+  </div>
 
-<script src="pak-tool.js"></script>
+  <!-- Minecraft version text in bottom-left -->
+  <aside class="minecraft-version-text" id="minecraft-version-text" style="display:block;">
+    <div class="version-title">OC Heritage Developer Community</div>
+    <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer
+      Community.<br>Not affiliated with Optiprojects.</div>
+  </aside>
+
+  <!-- Discord corner button in bottom-right -->
+  <a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord"
+    style="display:inline-flex;">
+    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+    <span>Discord</span>
+  </a>
+
+  <script src="js/pak-tool.js"></script>
 </body>
+
 </html>

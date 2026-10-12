@@ -1,211 +1,238 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" id="meta-desc" content="OptiCraft Heritage Developer Community — unofficial OptiCraft Heritage ports.">
-<title>OptiCraft Heritage Developer Community</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="meta-desc"
+    content="OptiCraft Heritage Developer Community — unofficial OptiCraft Heritage ports.">
+  <title>OptiCraft Heritage Developer Community</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
+
 <body>
-<div class="lang-switcher">
-  <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
-    <img class="lang-flag" src="flag-us.png" alt="English">
-  </button>
-  <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
-    <img class="lang-flag" src="flag-ar.png" alt="Español">
-  </button>
-</div>
-
-<div class="screen">
-  <div class="panorama" aria-hidden="true">
-    <div class="panorama-track">
-      <img src="TU12_Panorama_Background_S.png" alt="">
-      <img src="TU12_Panorama_Background_S.png" alt="">
-    </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
+      <img class="lang-flag" src="images/flag-us.png" alt="English">
+    </button>
+    <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
+      <img class="lang-flag" src="images/flag-ar.png" alt="Español">
+    </button>
   </div>
-  <div class="panorama-shade" aria-hidden="true"></div>
 
-  <header class="title-screen">
-    <img class="logo" src="title.png" alt="OptiCraft Heritage Developer Community">
-  </header>
-
-  <main>
-    <section class="legacy-menu" id="home">
-      <button class="menu-button selected" data-open="ports" data-i18n="btn-ports">PORT LIST</button>
-      <a class="menu-button" href="pak-tool.html" data-i18n="btn-pak-tool">HERRAMIENTA ASSETS.PAK</a>
-      <a class="menu-button" href="ochpack-tool.html" data-i18n="btn-ochpack-tool">CREADOR OCHPACK (PS2)</a>
-      <button class="menu-button" data-open="about" data-i18n="btn-about">ABOUT US</button>
-    </section>
-
-    <section class="legacy-panel" id="ports">
-      <div class="panel-heading">
-        <img class="section-heading-art" src="minecraft-text (8).png" alt="Ports">
+  <div class="screen">
+    <div class="panorama" aria-hidden="true">
+      <div class="panorama-track">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
       </div>
-      <div class="port-browser">
-        <div class="port-list">
-          <button class="port-entry active" data-port="dsi">
-            <span class="port-title">OptiCraft Heritage — DSi</span>
-            <span class="port-meta" data-i18n="port-dsi-meta">Nintendo DSi · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="3ds">
-            <span class="port-title">OptiCraft Heritage — 3DS</span>
-            <span class="port-meta" data-i18n="port-3ds-meta">Nintendo 3DS · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="ps2">
-            <span class="port-title">OptiCraft Heritage — PS2 Enhanced</span>
-            <span class="port-meta" data-i18n="port-ps2-meta">PlayStation 2 · Enhanced build</span>
-          </button>
-          <button class="port-entry" data-port="psp">
-            <span class="port-title">OptiCraft Heritage — PSP</span>
-            <span class="port-meta" data-i18n="port-psp-meta">PlayStation Portable · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="xbox">
-            <span class="port-title">OptiCraft Heritage — Original Xbox</span>
-            <span class="port-meta" data-i18n="port-xbox-meta">Xbox · Homebrew / xemu</span>
-          </button>
-          <button class="port-entry" data-port="android">
-            <span class="port-title">OptiCraft Heritage — Android</span>
-            <span class="port-meta" data-i18n="port-android-meta">Android · ARM64</span>
-          </button>
-          <button class="port-entry" data-port="switch">
-            <span class="port-title">OptiCraft Heritage — Nintendo Switch</span>
-            <span class="port-meta" data-i18n="port-switch-meta">Nintendo Switch · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="ps4">
-            <span class="port-title">OptiCraft Heritage — PS4</span>
-            <span class="port-meta" data-i18n="port-ps4-meta">PlayStation 4 · Homebrew / shadPS4</span>
-          </button>
-          <button class="port-entry" data-port="ps3">
-            <span class="port-title">OptiCraft Heritage — PS3</span>
-            <span class="port-meta" data-i18n="port-ps3-meta">PlayStation 3 · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="vita">
-            <span class="port-title">OptiCraft Heritage — PS Vita</span>
-            <span class="port-meta" data-i18n="port-vita-meta">PlayStation Vita · Homebrew</span>
-          </button>
-          <button class="port-entry" data-port="linux">
-            <span class="port-title">OptiCraft Heritage — Linux</span>
-            <span class="port-meta" data-i18n="port-linux-meta">Linux · Community builds</span>
-          </button>
+    </div>
+    <div class="panorama-shade" aria-hidden="true"></div>
+
+    <header class="title-screen">
+      <img class="logo" src="images/title.png" alt="OptiCraft Heritage Developer Community">
+    </header>
+
+    <main>
+      <section class="legacy-menu" id="home">
+        <button class="menu-button selected" data-open="ports" data-i18n="btn-ports">PORT LIST</button>
+        <a class="menu-button" href="pak-tool.html" data-i18n="btn-pak-tool">HERRAMIENTA ASSETS.PAK</a>
+        <a class="menu-button" href="ochpack-tool.html" data-i18n="btn-ochpack-tool">CREADOR OCHPACK (PS2)</a>
+        <button class="menu-button" data-open="about" data-i18n="btn-about">ABOUT US</button>
+      </section>
+
+      <section class="legacy-panel" id="ports">
+        <div class="panel-heading">
+          <img class="section-heading-art" src="images/minecraft-text (8).png" alt="Ports">
         </div>
-        <div class="port-preview">
-          <article class="port-view active" id="view-dsi">
-            <div class="port-info">
-              <h2>Nintendo DSi</h2>
-              <p data-i18n="port-dsi-desc">Unofficial OptiCraft Heritage port for Nintendo DSi hardware.</p>
-              <a class="legacy-button" href="https://github.com/Danielpro9/Opticraftheritage-Dsi-port" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-3ds">
-            <div class="port-info">
-              <h2>Nintendo 3DS</h2>
-              <p data-i18n="port-3ds-desc">Unofficial OptiCraft Heritage port targeting Nintendo 3DS.</p>
-              <a class="legacy-button" href="https://drive.google.com/drive/folders/1FVjQv72blnR8LRe3ioc95BN1a9567nEk" target="_blank" rel="noreferrer" data-i18n="btn-download">DOWNLOAD</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-ps2">
-            <div class="port-info">
-              <h2>PlayStation 2 — Enhanced</h2>
-              <p data-i18n="port-ps2-desc">An improved OptiCraft Heritage build for the original PlayStation 2.</p>
-              <a class="legacy-button" href="https://github.com/OptiJuegos/OptiCraftHeritageEdition" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-              <a class="legacy-button" href="https://www.mediafire.com/file/zx4cuebynotubvn/OptiCraftHeritage+PS2+95D.7z/file" target="_blank" rel="noreferrer" data-i18n="btn-ps2-build95d">DOWNLOAD (BUILD 95d)</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-psp">
-            <div class="port-info">
-              <h2>PlayStation Portable</h2>
-              <p data-i18n="port-psp-desc">Unofficial OptiCraft Heritage port for PlayStation Portable (PSP).</p>
-              <a class="legacy-button" href="https://github.com/erluza/OCHeritage-PSP" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-              <a class="legacy-button" href="https://gofile.io/d/AGVolAMG" target="_blank" rel="noreferrer" data-i18n="btn-psp-download">DOWNLOAD (PRECOMPILED)</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-xbox">
-            <div class="port-info">
-              <h2>Original Xbox</h2>
-              <p data-i18n="port-xbox-desc">Community OptiCraft Heritage build targeting the original Xbox, with support for xemu.</p>
-              <a class="legacy-button" href="https://github.com/xeodeo/OptiCraft-Heritage-XBOX-CLASSIC-Edition/releases" target="_blank" rel="noreferrer" data-i18n="btn-releases">RELEASES</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-android">
-            <div class="port-info">
-              <h2>Android</h2>
-              <p data-i18n="port-android-desc">ARM64 Android build of OptiCraft Heritage, currently targeting Android 7 and newer.</p>
-              <a class="legacy-button" href="https://github.com/ivandscds/OptiCraftHeritageEditionAndroid" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-switch">
-            <div class="port-info">
-              <h2>Nintendo Switch</h2>
-              <p data-i18n="port-switch-desc">Native Nintendo Switch Homebrew target built with devkitA64 and libnx.</p>
-              <a class="legacy-button" href="https://github.com/franco2705/OptiCraftHeritageEditionNX" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-ps4">
-            <div class="port-info">
-              <h2>PlayStation 4</h2>
-              <p data-i18n="port-ps4-desc">Experimental PS4 Homebrew port using the OpenOrbis toolchain, also targeting shadPS4.</p>
-              <a class="legacy-button" href="https://github.com/ScratchMelodii0/OptiCraftHeritageEditionPS4" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-ps3">
-            <div class="port-info">
-              <h2>PlayStation 3</h2>
-              <p data-i18n="port-ps3-desc">Community OptiCraft Heritage port with a native PlayStation 3 target.</p>
-              <a class="legacy-button" href="https://github.com/nasheOS/OptiCraftHeritageEditionPS3" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-vita">
-            <div class="port-info">
-              <h2>PlayStation Vita</h2>
-              <p data-i18n="port-vita-desc">Community OptiCraft Heritage port targeting PlayStation Vita hardware.</p>
-              <a class="legacy-button" href="https://github.com/DrDecki/OptiCraft-Vita" target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
-            </div>
-          </article>
-          <article class="port-view" id="view-linux">
-            <div class="port-info">
-              <h2>Linux</h2>
-              <p data-i18n="port-linux-desc">Community Linux builds of OptiCraft Heritage, including native SDL2/OpenGL builds.</p>
-              <a class="legacy-button" href="https://github.com/Muzifer01/OptiCraft173EditionLinux" target="_blank" rel="noreferrer" data-i18n="btn-muzifer-build">MUZIFER01 BUILD</a>
-              <a class="legacy-button" href="https://github.com/Brunoxx-create/OptiCraft-In-LINUX" target="_blank" rel="noreferrer" data-i18n="btn-brunox-build">BRUNOX X BUILD</a>
-            </div>
-          </article>
+        <div class="port-browser">
+          <div class="port-list">
+            <button class="port-entry active" data-port="dsi">
+              <span class="port-title">OptiCraft Heritage — DSi</span>
+              <span class="port-meta" data-i18n="port-dsi-meta">Nintendo DSi · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="3ds">
+              <span class="port-title">OptiCraft Heritage — 3DS</span>
+              <span class="port-meta" data-i18n="port-3ds-meta">Nintendo 3DS · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="ps2">
+              <span class="port-title">OptiCraft Heritage — PS2 Enhanced</span>
+              <span class="port-meta" data-i18n="port-ps2-meta">PlayStation 2 · Enhanced build</span>
+            </button>
+            <button class="port-entry" data-port="psp">
+              <span class="port-title">OptiCraft Heritage — PSP</span>
+              <span class="port-meta" data-i18n="port-psp-meta">PlayStation Portable · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="xbox">
+              <span class="port-title">OptiCraft Heritage — Original Xbox</span>
+              <span class="port-meta" data-i18n="port-xbox-meta">Xbox · Homebrew / xemu</span>
+            </button>
+            <button class="port-entry" data-port="android">
+              <span class="port-title">OptiCraft Heritage — Android</span>
+              <span class="port-meta" data-i18n="port-android-meta">Android · ARM64</span>
+            </button>
+            <button class="port-entry" data-port="switch">
+              <span class="port-title">OptiCraft Heritage — Nintendo Switch</span>
+              <span class="port-meta" data-i18n="port-switch-meta">Nintendo Switch · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="ps4">
+              <span class="port-title">OptiCraft Heritage — PS4</span>
+              <span class="port-meta" data-i18n="port-ps4-meta">PlayStation 4 · Homebrew / shadPS4</span>
+            </button>
+            <button class="port-entry" data-port="ps3">
+              <span class="port-title">OptiCraft Heritage — PS3</span>
+              <span class="port-meta" data-i18n="port-ps3-meta">PlayStation 3 · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="vita">
+              <span class="port-title">OptiCraft Heritage — PS Vita</span>
+              <span class="port-meta" data-i18n="port-vita-meta">PlayStation Vita · Homebrew</span>
+            </button>
+            <button class="port-entry" data-port="linux">
+              <span class="port-title">OptiCraft Heritage — Linux</span>
+              <span class="port-meta" data-i18n="port-linux-meta">Linux · Community builds</span>
+            </button>
+          </div>
+          <div class="port-preview">
+            <article class="port-view active" id="view-dsi">
+              <div class="port-info">
+                <h2>Nintendo DSi</h2>
+                <p data-i18n="port-dsi-desc">Unofficial OptiCraft Heritage port for Nintendo DSi hardware.</p>
+                <a class="legacy-button" href="https://github.com/Danielpro9/Opticraftheritage-Dsi-port" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-3ds">
+              <div class="port-info">
+                <h2>Nintendo 3DS</h2>
+                <p data-i18n="port-3ds-desc">Unofficial OptiCraft Heritage port targeting Nintendo 3DS.</p>
+                <a class="legacy-button" href="https://drive.google.com/drive/folders/1FVjQv72blnR8LRe3ioc95BN1a9567nEk"
+                  target="_blank" rel="noreferrer" data-i18n="btn-download">DOWNLOAD</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-ps2">
+              <div class="port-info">
+                <h2>PlayStation 2 — Enhanced</h2>
+                <p data-i18n="port-ps2-desc">An improved OptiCraft Heritage build for the original PlayStation 2.</p>
+                <a class="legacy-button" href="https://github.com/OptiJuegos/OptiCraftHeritageEdition" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                <a class="legacy-button"
+                  href="https://www.mediafire.com/file/zx4cuebynotubvn/OptiCraftHeritage+PS2+95D.7z/file"
+                  target="_blank" rel="noreferrer" data-i18n="btn-ps2-build95d">DOWNLOAD (BUILD 95d)</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-psp">
+              <div class="port-info">
+                <h2>PlayStation Portable</h2>
+                <p data-i18n="port-psp-desc">Unofficial OptiCraft Heritage port for PlayStation Portable (PSP).</p>
+                <a class="legacy-button" href="https://github.com/erluza/OCHeritage-PSP" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+                <a class="legacy-button" href="https://gofile.io/d/AGVolAMG" target="_blank" rel="noreferrer"
+                  data-i18n="btn-psp-download">DOWNLOAD (PRECOMPILED)</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-xbox">
+              <div class="port-info">
+                <h2>Original Xbox</h2>
+                <p data-i18n="port-xbox-desc">Community OptiCraft Heritage build targeting the original Xbox, with
+                  support for xemu.</p>
+                <a class="legacy-button"
+                  href="https://github.com/xeodeo/OptiCraft-Heritage-XBOX-CLASSIC-Edition/releases" target="_blank"
+                  rel="noreferrer" data-i18n="btn-releases">RELEASES</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-android">
+              <div class="port-info">
+                <h2>Android</h2>
+                <p data-i18n="port-android-desc">ARM64 Android build of OptiCraft Heritage, currently targeting Android
+                  7 and newer.</p>
+                <a class="legacy-button" href="https://github.com/ivandscds/OptiCraftHeritageEditionAndroid"
+                  target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-switch">
+              <div class="port-info">
+                <h2>Nintendo Switch</h2>
+                <p data-i18n="port-switch-desc">Native Nintendo Switch Homebrew target built with devkitA64 and libnx.
+                </p>
+                <a class="legacy-button" href="https://github.com/franco2705/OptiCraftHeritageEditionNX" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-ps4">
+              <div class="port-info">
+                <h2>PlayStation 4</h2>
+                <p data-i18n="port-ps4-desc">Experimental PS4 Homebrew port using the OpenOrbis toolchain, also
+                  targeting shadPS4.</p>
+                <a class="legacy-button" href="https://github.com/ScratchMelodii0/OptiCraftHeritageEditionPS4"
+                  target="_blank" rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article>
+            <!-- <article class="port-view" id="view-ps3">
+              <div class="port-info">
+                <h2>PlayStation 3</h2>
+                <p data-i18n="port-ps3-desc">Community OptiCraft Heritage port with a native PlayStation 3 target.</p>
+                <a class="legacy-button" href="https://github.com/nasheOS/OptiCraftHeritageEditionPS3" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article> -->
+            <article class="port-view" id="view-vita">
+              <div class="port-info">
+                <h2>PlayStation Vita</h2>
+                <p data-i18n="port-vita-desc">Community OptiCraft Heritage port targeting PlayStation Vita hardware.</p>
+                <a class="legacy-button" href="https://github.com/DrDecki/OptiCraft-Vita" target="_blank"
+                  rel="noreferrer" data-i18n="btn-view-project">VIEW PROJECT</a>
+              </div>
+            </article>
+            <article class="port-view" id="view-linux">
+              <div class="port-info">
+                <h2>Linux</h2>
+                <p data-i18n="port-linux-desc">Community Linux builds of OptiCraft Heritage, including native
+                  SDL2/OpenGL builds.</p>
+                <a class="legacy-button" href="https://github.com/Muzifer01/OptiCraft173EditionLinux" target="_blank"
+                  rel="noreferrer" data-i18n="btn-muzifer-build">MUZIFER01 BUILD</a>
+                <a class="legacy-button" href="https://github.com/Brunoxx-create/OptiCraft-In-LINUX" target="_blank"
+                  rel="noreferrer" data-i18n="btn-brunox-build">BRUNOX X BUILD</a>
+              </div>
+            </article>
+          </div>
         </div>
-      </div>
-      <div class="controls" data-i18n="controls"><span>▲ ▼</span> SELECT &nbsp; <span>ENTER</span> OPEN &nbsp; <span>ESC</span> BACK</div>
-      <div class="panel-footer-actions">
-        <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
-      </div>
-    </section>
+        <div class="controls" data-i18n="controls"><span>▲ ▼</span> SELECT &nbsp; <span>ENTER</span> OPEN &nbsp;
+          <span>ESC</span> BACK
+        </div>
+        <div class="panel-footer-actions">
+          <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
+        </div>
+      </section>
 
-    <section class="legacy-panel about-panel" id="about">
-      <div class="panel-heading">
-        <img class="section-heading-art about-heading-art" src="minecraft-text (9).png" alt="About Us">
-      </div>
-      <div class="about-content">
-        <div class="about-copy" id="about-copy-container"></div>
-      </div>
-      <div class="panel-footer-actions">
-        <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
-      </div>
-    </section>
-  </main>
-</div>
+      <section class="legacy-panel about-panel" id="about">
+        <div class="panel-heading">
+          <img class="section-heading-art about-heading-art" src="images/minecraft-text (9).png" alt="About Us">
+        </div>
+        <div class="about-content">
+          <div class="about-copy" id="about-copy-container"></div>
+        </div>
+        <div class="panel-footer-actions">
+          <button class="legacy-button back-home" data-i18n="btn-back">BACK</button>
+        </div>
+      </section>
+    </main>
+  </div>
 
-<!-- Minecraft 1.2.5 style bottom-left credits -->
-<aside class="minecraft-version-text" id="minecraft-version-text" aria-label="Version & credits">
-  <div class="version-title">OC Heritage Developer Community</div>
-  <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer Community.<br>Not affiliated with Optiprojects.</div>
-</aside>
+  <!-- Minecraft 1.2.5 style bottom-left credits -->
+  <aside class="minecraft-version-text" id="minecraft-version-text" aria-label="Version & credits">
+    <div class="version-title">OC Heritage Developer Community</div>
+    <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer
+      Community.<br>Not affiliated with Optiprojects.</div>
+  </aside>
 
-<!-- Discord bottom-right corner button -->
-<a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord">
-  <i class="fa-brands fa-discord" aria-hidden="true"></i>
-  <span>Discord</span>
-</a>
+  <!-- Discord bottom-right corner button -->
+  <a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord">
+    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+    <span>Discord</span>
+  </a>
 
-<script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
+
 </html>

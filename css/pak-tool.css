@@ -1,14 +1,20 @@
 /* OptiCraft Heritage - Pak Tool Styles */
 @font-face {
   font-family: Minecraft;
-  src: url("Minecraft-Regular.ttf") format("truetype");
+  src: url("../fonts/Minecraft-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: #111;
@@ -17,7 +23,11 @@ body {
   image-rendering: pixelated;
   min-height: 100vh;
 }
-button, a, input, select {
+
+button,
+a,
+input,
+select {
   font: inherit;
   font-family: Minecraft, Arial, Helvetica, sans-serif;
 }
@@ -29,6 +39,7 @@ button, a, input, select {
   background: #111;
   padding-bottom: 60px;
 }
+
 .panorama {
   position: fixed;
   inset: 0;
@@ -36,6 +47,7 @@ button, a, input, select {
   z-index: 0;
   background: #111;
 }
+
 .panorama-track {
   position: absolute;
   top: 0;
@@ -45,6 +57,7 @@ button, a, input, select {
   display: flex;
   animation: tu12-panorama 35s linear infinite;
 }
+
 .panorama-track img {
   display: block;
   flex: 0 0 50%;
@@ -54,20 +67,28 @@ button, a, input, select {
   object-fit: cover;
   object-position: center;
 }
+
 .panorama-track img:nth-child(2) {
   transform: scaleX(-1);
 }
+
 @keyframes tu12-panorama {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
+
 .panorama-shade {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.6)),
-              linear-gradient(90deg, rgba(0,0,0,.2), transparent 35%, transparent 65%, rgba(0,0,0,.2));
+  background: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .6)),
+    linear-gradient(90deg, rgba(0, 0, 0, .2), transparent 35%, transparent 65%, rgba(0, 0, 0, .2));
 }
 
 /* Header Bar */
@@ -81,6 +102,7 @@ button, a, input, select {
   max-width: 1000px;
   margin: 0 auto;
 }
+
 .nav-back-btn {
   display: inline-flex;
   align-items: center;
@@ -89,24 +111,31 @@ button, a, input, select {
   text-decoration: none;
   background: #555;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #aaa, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   padding: 8px 14px;
   font-size: 13px;
   text-shadow: 2px 2px #222;
   transition: background .15s ease, transform .05s ease;
 }
-.nav-back-btn:hover { background: #777; }
-.nav-back-btn:active { transform: translate(1px, 1px); }
+
+.nav-back-btn:hover {
+  background: #777;
+}
+
+.nav-back-btn:active {
+  transform: translate(1px, 1px);
+}
 
 .lang-switcher {
   display: flex;
   gap: 8px;
 }
+
 .lang-btn {
   background: #4a4a4a;
   color: #fff;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   padding: 4px 6px;
   cursor: pointer;
   display: inline-flex;
@@ -115,14 +144,27 @@ button, a, input, select {
   user-select: none;
   transition: background .15s ease, transform .05s ease;
 }
-.lang-btn:hover { background: #666; }
+
+.lang-btn:hover {
+  background: #666;
+}
+
 .lang-btn.active {
   background: #777;
-  outline: 2px solid rgba(255,255,255,.8);
+  outline: 2px solid rgba(255, 255, 255, .8);
   box-shadow: inset 2px 2px #222, inset -2px -2px #aaa;
 }
-.lang-btn:active { transform: translate(1px, 1px); }
-.lang-flag { display: block; width: 28px; height: 28px; object-fit: contain; }
+
+.lang-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.lang-flag {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
 
 /* Main Container */
 .tool-container {
@@ -136,6 +178,7 @@ button, a, input, select {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .tool-title {
   font-size: clamp(20px, 4vw, 28px);
   margin: 0 0 8px;
@@ -143,6 +186,7 @@ button, a, input, select {
   color: #fff;
   letter-spacing: 0.5px;
 }
+
 .tool-subtitle {
   font-size: clamp(12px, 2.5vw, 15px);
   color: #ccc;
@@ -153,9 +197,9 @@ button, a, input, select {
 
 /* Panel Box */
 .legacy-panel {
-  background: rgba(38,38,38,.96);
+  background: rgba(38, 38, 38, .96);
   border: 3px solid #111;
-  box-shadow: inset 2px 2px #666, inset -2px -2px #171717, 7px 7px rgba(0,0,0,.5);
+  box-shadow: inset 2px 2px #666, inset -2px -2px #171717, 7px 7px rgba(0, 0, 0, .5);
   padding: 24px;
 }
 
@@ -167,13 +211,14 @@ button, a, input, select {
   padding-bottom: 14px;
   margin-bottom: 20px;
 }
+
 .tab-btn {
   flex: 1;
   padding: 12px 14px;
   background: #555;
   color: #ccc;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0,0,0,.6);
+  box-shadow: inset 2px 2px #888, inset -2px -2px #222, 2px 2px rgba(0, 0, 0, .6);
   cursor: pointer;
   text-shadow: 2px 2px #222;
   font-size: clamp(12px, 2.5vw, 15px);
@@ -184,20 +229,23 @@ button, a, input, select {
   gap: 8px;
   transition: all .15s ease;
 }
+
 .tab-btn:hover {
   background: #6e6e6e;
   color: #fff;
 }
+
 .tab-btn.active {
   background: #858585;
   color: #fff;
-  outline: 2px solid rgba(255,255,255,.6);
+  outline: 2px solid rgba(255, 255, 255, .6);
   box-shadow: inset 2px 2px #333, inset -2px -2px #aaa;
 }
 
 .tab-pane {
   display: none;
 }
+
 .tab-pane.active {
   display: block;
 }
@@ -214,9 +262,18 @@ button, a, input, select {
   color: #ddd;
   text-shadow: 1px 1px #111;
 }
-.info-card p { margin: 0 0 6px; }
-.info-card p:last-child { margin: 0; }
-.info-card strong { color: #fff; }
+
+.info-card p {
+  margin: 0 0 6px;
+}
+
+.info-card p:last-child {
+  margin: 0;
+}
+
+.info-card strong {
+  color: #fff;
+}
 
 /* Dropzone & Picker */
 .dropzone {
@@ -229,21 +286,26 @@ button, a, input, select {
   margin-bottom: 18px;
   border-radius: 2px;
 }
-.dropzone:hover, .dropzone.dragover {
+
+.dropzone:hover,
+.dropzone.dragover {
   border-color: #55aaff;
   background: rgba(35, 45, 60, 0.8);
 }
+
 .dropzone-icon {
   font-size: 38px;
   color: #88aacc;
   margin-bottom: 12px;
 }
+
 .dropzone-text {
   font-size: 14px;
   color: #eee;
   margin-bottom: 14px;
   line-height: 1.4;
 }
+
 .dropzone-actions {
   display: flex;
   justify-content: center;
@@ -265,31 +327,43 @@ button, a, input, select {
   text-shadow: 2px 2px #333;
   background: #777;
   border: 2px solid #1b1b1b;
-  box-shadow: inset 2px 2px #aaa, inset -2px -2px #444, 3px 3px rgba(0,0,0,.65);
+  box-shadow: inset 2px 2px #aaa, inset -2px -2px #444, 3px 3px rgba(0, 0, 0, .65);
   padding: 11px 18px;
   font-size: 13px;
   user-select: none;
   transition: background .15s ease, transform .05s ease;
 }
+
 .legacy-btn:hover {
   background: #8d8d8d;
-  outline: 2px solid rgba(255,255,255,.2);
+  outline: 2px solid rgba(255, 255, 255, .2);
 }
+
 .legacy-btn:active {
   box-shadow: inset 2px 2px #444, inset -2px -2px #aaa, 1px 1px #111;
   transform: translate(2px, 2px);
 }
+
 .legacy-btn.primary {
   background: #2b5b84;
-  box-shadow: inset 2px 2px #508bc0, inset -2px -2px #15324d, 3px 3px rgba(0,0,0,.65);
+  box-shadow: inset 2px 2px #508bc0, inset -2px -2px #15324d, 3px 3px rgba(0, 0, 0, .65);
 }
-.legacy-btn.primary:hover { background: #3b74a4; }
+
+.legacy-btn.primary:hover {
+  background: #3b74a4;
+}
+
 .legacy-btn.success {
   background: #2b8444;
-  box-shadow: inset 2px 2px #4fc473, inset -2px -2px #144924, 3px 3px rgba(0,0,0,.65);
+  box-shadow: inset 2px 2px #4fc473, inset -2px -2px #144924, 3px 3px rgba(0, 0, 0, .65);
 }
-.legacy-btn.success:hover { background: #38a557; }
-.legacy-btn:disabled, .legacy-btn.disabled {
+
+.legacy-btn.success:hover {
+  background: #38a557;
+}
+
+.legacy-btn:disabled,
+.legacy-btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
@@ -299,12 +373,14 @@ button, a, input, select {
 .form-group {
   margin-bottom: 16px;
 }
+
 .form-label {
   display: block;
   font-size: 13px;
   margin-bottom: 6px;
   color: #ddd;
 }
+
 .form-input {
   width: 100%;
   background: #222;
@@ -315,9 +391,11 @@ button, a, input, select {
   box-shadow: inset 1px 1px #444;
   outline: none;
 }
+
 .form-input:focus {
   border-color: #55aaff;
 }
+
 .checkbox-label {
   display: inline-flex;
   align-items: center;
@@ -333,7 +411,7 @@ button, a, input, select {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(20,20,20,0.8);
+  background: rgba(20, 20, 20, 0.8);
   border: 2px solid #111;
   padding: 10px 14px;
   margin-bottom: 16px;
@@ -341,6 +419,7 @@ button, a, input, select {
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .summary-badge {
   background: #444;
   border: 1px solid #666;
@@ -357,11 +436,13 @@ button, a, input, select {
   background: #181818;
   margin-bottom: 16px;
 }
+
 .file-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
+
 .file-table th {
   background: #282828;
   padding: 8px 10px;
@@ -372,6 +453,7 @@ button, a, input, select {
   z-index: 2;
   color: #aaa;
 }
+
 .file-table td {
   padding: 7px 10px;
   border-bottom: 1px solid #242424;
@@ -379,9 +461,11 @@ button, a, input, select {
   font-family: Consolas, "Courier New", monospace;
   font-size: 11px;
 }
+
 .file-table tr:hover td {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
+
 .download-single-btn {
   background: #444;
   border: 1px solid #111;
@@ -393,7 +477,10 @@ button, a, input, select {
   display: inline-block;
   font-family: Minecraft, Arial, sans-serif;
 }
-.download-single-btn:hover { background: #666; }
+
+.download-single-btn:hover {
+  background: #666;
+}
 
 /* Progress & Status */
 .progress-container {
@@ -401,6 +488,7 @@ button, a, input, select {
   padding-top: 14px;
   border-top: 2px solid #111;
 }
+
 .progress-bar {
   height: 18px;
   background: #222;
@@ -410,6 +498,7 @@ button, a, input, select {
   margin-bottom: 8px;
   position: relative;
 }
+
 .progress-fill {
   height: 100%;
   width: 0%;
@@ -417,6 +506,7 @@ button, a, input, select {
   box-shadow: inset 1px 1px #65e073;
   transition: width 0.1s linear;
 }
+
 .status-text {
   font-size: 12px;
   color: #ccc;
@@ -433,10 +523,12 @@ button, a, input, select {
   color: #aaa;
   margin-bottom: 4px;
 }
+
 .log-actions {
   display: flex;
   gap: 8px;
 }
+
 .log-mini-btn {
   background: transparent;
   border: 1px solid #444;
@@ -445,7 +537,12 @@ button, a, input, select {
   padding: 2px 6px;
   cursor: pointer;
 }
-.log-mini-btn:hover { color: #fff; border-color: #777; }
+
+.log-mini-btn:hover {
+  color: #fff;
+  border-color: #777;
+}
+
 .log-terminal {
   width: 100%;
   height: 120px;
@@ -464,17 +561,53 @@ button, a, input, select {
 
 /* Responsive adjustments */
 @media (max-width: 780px) {
-  .legacy-panel { padding: 16px; }
-  .dropzone { padding: 20px 12px; }
-  .dropzone-actions { flex-direction: column; }
-  .dropzone-actions .legacy-btn { width: 100%; }
+  .legacy-panel {
+    padding: 16px;
+  }
+
+  .dropzone {
+    padding: 20px 12px;
+  }
+
+  .dropzone-actions {
+    flex-direction: column;
+  }
+
+  .dropzone-actions .legacy-btn {
+    width: 100%;
+  }
 }
+
 @media (max-width: 520px) {
-  .top-nav { padding: 12px 14px; }
-  .nav-back-btn { font-size: 11px; padding: 6px 10px; }
-  .lang-flag { width: 22px; height: 22px; }
-  .tool-title { font-size: 18px; }
-  .tab-btn { font-size: 11px; padding: 10px 8px; }
-  .legacy-panel { padding: 12px; }
-  .legacy-btn { font-size: 12px; padding: 9px 14px; }
+  .top-nav {
+    padding: 12px 14px;
+  }
+
+  .nav-back-btn {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .lang-flag {
+    width: 22px;
+    height: 22px;
+  }
+
+  .tool-title {
+    font-size: 18px;
+  }
+
+  .tab-btn {
+    font-size: 11px;
+    padding: 10px 8px;
+  }
+
+  .legacy-panel {
+    padding: 12px;
+  }
+
+  .legacy-btn {
+    font-size: 12px;
+    padding: 9px 14px;
+  }
 }
