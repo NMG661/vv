@@ -81,6 +81,20 @@
     ochAlert({ icon: 'error', title: 'Error', text: message });
   }
 
+  function ochEscapeHtml(text) {
+    // Entities are built by concatenation so they survive any tooling
+    // that normalises literal HTML entities in source files.
+    const amp = '&' + 'amp;';
+    const lt = '&' + 'lt;';
+    const gt = '&' + 'gt;';
+    const quot = '&' + 'quot;';
+    return String(text)
+      .replace(/&/g, amp)
+      .replace(/</g, lt)
+      .replace(/>/g, gt)
+      .replace(/"/g, quot);
+  }
+
   function ochBlobToDataUrl(blob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -140,10 +154,10 @@
       icon: 'success',
       title: es ? '¡Descarga iniciada!' : 'Download started!',
       html:
-        `<div class="och-swal-file">${filename} (${ochFormatBytes(blob.size)})</div>` +
+        `<div class="och-swal-file">${ochEscapeHtml(filename)} (${ochFormatBytes(blob.size)})</div>` +
         `<div class="och-swal-qr" id="och-qr-box"></div>` +
         `<div class="och-swal-caption">${caption}</div>` +
-        (opts.note ? `<div class="och-swal-note">${opts.note}</div>` : ''),
+        (opts.note ? `<div class="och-swal-note">${ochEscapeHtml(opts.note)}</div>` : ''),
       width: 420,
       didOpen: (popup) => {
         const box = popup.querySelector('#och-qr-box');
