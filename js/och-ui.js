@@ -8,17 +8,12 @@
  * downloadBlob, log, slugify...). Never define those names here.
  *
  * QR transfer strategy (no backend, everything stays client-side):
- *  - file <= OCH_QR_MAX_BYTES: the QR encodes a data: URL with the whole
- *    file embedded, scannable with the 3DS browser's (or any phone's) QR
- *    reader to download the file directly.
- *  - bigger files can never fit inside a QR code, so the QR encodes this
- *    page's URL instead: open the tool on the 3DS and generate it there.
+ * the QR always encodes this page's URL — open the tool on the 3DS and
+ * generate the file there. (Embedding the file itself as a data: URL was
+ * dropped: even sub-2 KB files produce QRs too dense for the 3DS camera
+ * to read.)
  */
 (function () {
-  // QR v40 with EC level L holds 2953 bytes; a data: URL is ~37 chars of
-  // prefix plus base64 (+33%), so 2000 bytes of file stays comfortably inside.
-  const OCH_QR_MAX_BYTES = 2000;
-
   const ochIsEs = () => (localStorage.getItem('heritage_lang') || 'en') === 'es';
 
   function ochFormatBytes(bytes) {
@@ -95,15 +90,6 @@
       .replace(/"/g, quot);
   }
 
-  function ochBlobToDataUrl(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(reader.error || new Error('FileReader failed'));
-      reader.readAsDataURL(blob);
-    });
-  }
-
   /**
    * Download a blob and show a themed "download started" dialog with a QR
    * code so the file can be picked up on another device (e.g. a 3DS).
@@ -125,27 +111,14 @@
       URL.revokeObjectURL(url);
     }, 1000);
 
-    // 2. Choose the QR payload: data: URL when the file fits, page URL otherwise
+    // 2. QR payload: always this page's URL — the 3DS camera can't read the
+    // dense QRs a data: URL produces, even for tiny files.
     const es = ochIsEs();
-    let qrText = location.href.split('#')[0];
-    let direct = false;
-    if (blob.size <= OCH_QR_MAX_BYTES) {
-      try {
-        const dataUrl = await ochBlobToDataUrl(blob);
-        if (dataUrl.length <= 2900) {
-          qrText = dataUrl;
-          direct = true;
-        }
-      } catch (err) { /* fall back to the page URL */ }
-    }
+    const qrText = location.href.split('#')[0];
 
-    const caption = direct
-      ? (es
-        ? 'Escaneá el código con el lector QR del navegador de tu 3DS (o con el celu) para bajar el archivo directamente.'
-        : "Scan the code with your 3DS browser's QR reader (or your phone) to download the file directly.")
-      : (es
-        ? 'El archivo supera el límite de ~2 KB que puede viajar dentro de un código QR. Escaneá para abrir esta herramienta en tu 3DS y generá el archivo ahí mismo.'
-        : 'The file exceeds the ~2 KB a QR code can carry. Scan to open this tool on your 3DS and generate the file there.');
+    const caption = es
+      ? 'Escaneá el código para abrir esta herramienta en tu 3DS y generá el archivo ahí mismo.'
+      : 'Scan the code to open this tool on your 3DS and generate the file there.';
 
     // 3. Success dialog with the embedded QR
     const Swal2 = ochSwalMixin();

@@ -138,6 +138,28 @@
             </div>
           </div>
 
+          <!-- 3DS Camera QR Code Generator -->
+          <div class="qr-card-section">
+            <div class="qr-header">
+              <i class="fa-solid fa-qrcode"></i>
+              <div class="qr-title" data-i18n="qr-section-title">Have a direct image link? Scan with 3DS Camera</div>
+            </div>
+            <div class="qr-desc" data-i18n="qr-section-desc">
+              OptiCraft 3DS features a built-in 'QR Download' option in the skins menu! If you host your skin online (e.g. Imgur, GitHub, Discord), enter the direct URL here to generate a scannable QR code:
+            </div>
+            <div class="qr-input-row">
+              <input type="url" id="qrUrlInput" class="qr-input" placeholder="https://example.com/myskin.png" data-i18n-ph="qr-input-placeholder">
+              <button class="legacy-btn secondary" type="button" id="btnGenerateQR">
+                <i class="fa-solid fa-qrcode"></i>
+                <span data-i18n="btn-generate-qr">Generate QR</span>
+              </button>
+            </div>
+            <div class="qr-display-box" id="qrDisplayBox">
+              <div id="qrcodeContainer"></div>
+              <div class="qr-tip-text" data-i18n="qr-tip">Open OptiCraft on 3DS > Skins > QR Download and point your back camera at the screen.</div>
+            </div>
+          </div>
+
           <!-- Loaded Skin Card (Appears after choosing or dropping a file) -->
           <div class="loaded-skin-card" id="loadedSkinCard">
             <div class="skin-thumbnail-box">
@@ -335,28 +357,6 @@
               <li data-i18n="sd-step-2">Copy the downloaded <strong>.png</strong> file directly into: <code>/opticraft/.minecraft/skins/</code> (or <code>/opticraft/skins/</code>).</li>
               <li data-i18n="sd-step-3">Open OptiCraft on your 3DS, head to <strong>Options > Skins</strong>, select your skin, and enjoy!</li>
             </ol>
-          </div>
-
-          <!-- 3DS Camera QR Code Generator -->
-          <div class="qr-card-section">
-            <div class="qr-header">
-              <i class="fa-solid fa-qrcode"></i>
-              <div class="qr-title" data-i18n="qr-section-title">Have a direct image link? Scan with 3DS Camera</div>
-            </div>
-            <div class="qr-desc" data-i18n="qr-section-desc">
-              OptiCraft 3DS features a built-in 'QR Download' option in the skins menu! If you host your skin online (e.g. Imgur, GitHub, Discord), enter the direct URL here to generate a scannable QR code:
-            </div>
-            <div class="qr-input-row">
-              <input type="url" id="qrUrlInput" class="qr-input" placeholder="https://example.com/myskin.png" data-i18n-ph="qr-input-placeholder">
-              <button class="legacy-btn secondary" type="button" id="btnGenerateQR">
-                <i class="fa-solid fa-qrcode"></i>
-                <span data-i18n="btn-generate-qr">Generate QR</span>
-              </button>
-            </div>
-            <div class="qr-display-box" id="qrDisplayBox">
-              <div id="qrcodeContainer"></div>
-              <div class="qr-tip-text" data-i18n="qr-tip">Open OptiCraft on 3DS > Skins > QR Download and point your back camera at the screen.</div>
-            </div>
           </div>
 
           <!-- Bottom Actions -->
