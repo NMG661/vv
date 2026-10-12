@@ -699,7 +699,7 @@ btnStartBuild.addEventListener('click', async () => {
     // 2. Add mod.info
     if (chkGenerateMeta.checked) {
       const modInfoText =
-`id=${id}
+        `id=${id}
 name=${name}
 version=${version}
 author=${author}

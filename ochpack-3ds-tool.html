@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="meta-desc"
+    content="OptiCraft Heritage — Web tool to convert Java texture packs (.ZIP) to Minecraft 3DS Edition orientation and .ochpack format.">
+  <title>OptiCraft Heritage — 3DS Texture Pack Flipper & OCHPACK</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/ochpack-tool.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="js/jszip.min.js"></script>
+</head>
+
+<body>
+  <div class="screen">
+    <div class="panorama" aria-hidden="true">
+      <div class="panorama-track">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+      </div>
+    </div>
+    <div class="panorama-shade" aria-hidden="true"></div>
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div class="nav-buttons-group">
+        <a class="nav-back-btn" href="index.html" id="btn-back-portal">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="back-portal">BACK TO PORTAL</span>
+        </a>
+        <a class="nav-back-btn accent" href="ochpack-tool.html" id="btn-goto-ps2">
+          <i class="fa-solid fa-gamepad"></i>
+          <span data-i18n="goto-ps2-tool">PS2 OCHPACK TOOL</span>
+        </a>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
+          <img class="lang-flag" src="images/flag-us.png" alt="English">
+        </button>
+        <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
+          <img class="lang-flag" src="images/flag-ar.png" alt="Español">
+        </button>
+      </div>
+    </header>
+
+    <main class="tool-container">
+      <div class="tool-header">
+        <div class="ps2-badge-header" style="background:#2a4f78;">Nintendo 3DS Edition</div>
+        <h1 class="tool-title" data-i18n="tool-title">3DS TEXTURE PACK FLIPPER & OCHPACK</h1>
+        <p class="tool-subtitle" data-i18n="tool-subtitle">Convert Java Edition texture packs to native 3DS orientation and .ochpack format</p>
+      </div>
+
+      <section class="legacy-panel">
+        <div class="info-card">
+          <p><strong data-i18n="info-title">Convert any Java texture pack (.ZIP) into a 3DS-ready texture pack (.zip or .ochpack).</strong></p>
+          <p data-i18n="info-desc">Automatically flips all PNG textures vertically (Y-axis), crops modern legacy slim entity sheets, preserves CPU color lookup tables, and builds official runtime metadata.</p>
+        </div>
+
+        <input type="file" id="zipInput" accept=".zip" style="display:none">
+        <input type="file" id="customPackPngInput" accept="image/png,image/jpeg,image/webp" style="display:none">
+
+        <!-- Dropzone -->
+        <div class="dropzone" id="dropzone">
+          <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <div class="dropzone-text" data-i18n="dropzone-text">
+            Drag & drop your Java texture pack (.ZIP) here, or tap to choose
+          </div>
+          <div class="dropzone-actions">
+            <button type="button" class="legacy-btn" id="btnSelectZip" data-i18n="btn-select-zip">
+              <i class="fa-solid fa-file-zipper"></i> Select Java .ZIP Pack
+            </button>
+          </div>
+        </div>
+
+        <!-- 3DS/OCHPACK Live Preview Card -->
+        <div class="ps2-preview-section">
+          <div class="ps2-preview-title" data-i18n="preview-heading">3DS Texture Pack Preview (In-Game Look):</div>
+          <div class="ps2-pack-card" id="previewPackCard">
+            <div class="pack-thumbnail-wrap" id="packThumbnailWrap" title="Click to upload custom pack.png">
+              <img class="pack-thumbnail-img" id="previewPackImg" src="" alt="pack.png" style="display:none;">
+              <div id="previewPackImgFallback" style="font-size:28px; color:#555;"><i class="fa-solid fa-image"></i></div>
+              <div class="pack-thumbnail-overlay">
+                <i class="fa-solid fa-camera"></i>
+                <span data-i18n="btn-change-icon">Change icon</span>
+              </div>
+            </div>
+            <div class="pack-details-content">
+              <h2 class="pack-card-name" id="previewCardName">Default Texture Pack</h2>
+              <p class="pack-card-desc1" id="previewCardDesc1">Standard Minecraft look & feel</p>
+              <p class="pack-card-desc2" id="previewCardDesc2">By Heritage Team</p>
+              <div class="pack-meta-pills" id="previewCardPills">
+                <span class="pack-pill ps2" style="background:#2a4f78;">3DS · type=texturepack</span>
+                <span class="pack-pill files" id="fileCountBadgePill">0 files</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadata Form -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="inputPackName" data-i18n="label-pack-name">Pack Name (Display in 3DS):</label>
+            <input type="text" class="form-input" id="inputPackName" placeholder="DarkCraft 3DS" maxlength="34">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="inputPackId" data-i18n="label-pack-id">Internal ID (Lowercase, no spaces):</label>
+            <input type="text" class="form-input" id="inputPackId" placeholder="darkcraft_3ds" pattern="[a-zA-Z0-9_\-]+">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="inputPackAuthor" data-i18n="label-pack-author">Author / Creator:</label>
+            <input type="text" class="form-input" id="inputPackAuthor" placeholder="Heritage Team" maxlength="34">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="inputPackVersion" data-i18n="label-pack-version">Version:</label>
+            <input type="text" class="form-input" id="inputPackVersion" placeholder="1.2.5" value="1.2.5">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inputPackDesc1" data-i18n="label-pack-desc1">Description (Line 1 - max 34 chars):</label>
+          <input type="text" class="form-input" id="inputPackDesc1" placeholder="Dark, clean, & retro" maxlength="34">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inputPackDesc2" data-i18n="label-pack-desc2">Subtitle / Details (Line 2 - max 34 chars):</label>
+          <input type="text" class="form-input" id="inputPackDesc2" placeholder="Converted for 3DS Edition" maxlength="34">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="outputName" data-i18n="label-output-name">Output file name:</label>
+          <input type="text" class="form-input" id="outputName" value="JavaPack-3DS.ochpack" placeholder="JavaPack-3DS.ochpack">
+        </div>
+
+        <!-- Options Checkboxes -->
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="chkCropSlim" checked>
+            <span data-i18n="chk-crop-slim">Crop modern square (64x64+) entity sheets to legacy top half</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="chkGenerateMeta" checked>
+            <span data-i18n="chk-gen-meta">Generate official mod.info and pack.txt formatted for 3DS runtime</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="chkResizePackPng" checked>
+            <span data-i18n="chk-resize-icon">Ensure pack.png thumbnail is 128x128 pixels</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="chkExportOchpack" checked>
+            <span data-i18n="chk-export-ochpack">Export as .ochpack format (recommended for OptiCraft 3DS)</span>
+          </label>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="button" class="legacy-btn primary" id="btnStartConvert" style="min-width: 280px;" disabled data-i18n="btn-start-convert">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Convert & Download 3DS Pack
+          </button>
+        </div>
+
+        <!-- Bottom Progress Bar & Terminal Console -->
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBarFill"></div>
+          </div>
+          <div class="status-text" id="statusText" data-i18n="status-ready">Ready.</div>
+
+          <div class="log-box-header">
+            <span data-i18n="log-title">Activity Log (Console):</span>
+            <div class="log-actions">
+              <button type="button" class="log-mini-btn" id="btnCopyLog" data-i18n="btn-copy-log">Copy</button>
+              <button type="button" class="log-mini-btn" id="btnClearLog" data-i18n="btn-clear-log">Clear</button>
+            </div>
+          </div>
+          <div class="log-terminal" id="logTerminal"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <aside class="minecraft-version-text" id="minecraft-version-text">
+    <div class="version-title">OC Heritage Developer Community</div>
+    <div class="version-disclaimer" data-i18n="footer-disclaimer">Developed by OptiCraft Heritage Developer Community.<br>Not affiliated with Optiprojects.</div>
+  </aside>
+
+  <a class="discord-corner-btn" href="https://discord.gg/5ndWfJzb7e" target="_blank" rel="noreferrer" title="Discord">
+    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+    <span>Discord</span>
+  </a>
+
+  <script src="js/ochpack-3ds-tool.js"></script>
+</body>
+
+</html>

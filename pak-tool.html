@@ -34,6 +34,10 @@
           <i class="fa-solid fa-wand-magic-sparkles"></i>
           <span data-i18n="goto-ochpack">OCHPACK CREATOR (PS2)</span>
         </a>
+        <a class="nav-back-btn" href="ochpack-3ds-tool.html" id="btn-goto-ochpack-3ds" style="background:#3c5270;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-i18n="goto-ochpack-3ds">OCHPACK CREATOR (3DS)</span>
+        </a>
       </div>
       <div class="lang-switcher">
         <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
@@ -56,12 +60,13 @@
         <!-- Tabs Navigation -->
         <nav class="tabs-nav" role="tablist">
           <button class="tab-btn active" id="tabBtnPack" data-tab="tabPack">
-            <i class="fa-solid fa-box-archive"></i>
-            <span data-i18n="tab-pack"> Empaquetar a .pak</span>
+            <span data-i18n="tab-pack">📦 Empaquetar a .pak</span>
           </button>
           <button class="tab-btn" id="tabBtnUnpack" data-tab="tabUnpack">
-            <i class="fa-solid fa-folder-open"></i>
-            <span data-i18n="tab-unpack"> Desempaquetar .pak</span>
+            <span data-i18n="tab-unpack">📂 Desempaquetar .pak</span>
+          </button>
+          <button class="tab-btn" id="tabBtnConvert3ds" data-tab="tabConvert3ds">
+            <span data-i18n="tab-convert-3ds">🔄 3ds convert .pak</span>
           </button>
         </nav>
 
@@ -186,6 +191,46 @@
                 <i class="fa-solid fa-file-zipper"></i> Descargar Todo como .ZIP
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: 3ds convert .pak -->
+        <div class="tab-pane" id="tabConvert3ds">
+          <div class="info-card">
+            <p><strong data-i18n="convert-info-title">Selecciona un archivo .pak para convertir las texturas entre
+                Minecraft 3DS Edition y Java.</strong></p>
+            <p data-i18n="convert-info-desc">Aplica la inversión en el eje Y (y opcionalmente X en skins) basándose en
+              las reglas de conversión de texturas de MC-3DS.</p>
+          </div>
+
+          <input type="file" id="pakConvertInput" accept=".pak" style="display:none">
+
+          <!-- Dropzone for 3DS Convert -->
+          <div class="dropzone" id="convertDropzone">
+            <div class="dropzone-icon"><i class="fa-solid fa-rotate"></i></div>
+            <div class="dropzone-text" data-i18n="convert-dropzone-text">
+              Arrastra y suelta tu archivo .pak aquí o pulsa para seleccionarlo
+            </div>
+            <div class="dropzone-actions">
+              <button type="button" class="legacy-btn" id="btnSelectConvertPak" data-i18n="btn-select-pak">
+                <i class="fa-solid fa-file-import"></i> Buscar archivo .pak...
+              </button>
+            </div>
+          </div>
+
+          <!-- Opciones de conversión -->
+          <div class="form-group" style="margin-top: 15px;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="convertFlagAll">
+              <span data-i18n="chk-convert-all">Voltear TODOS los PNGs (Modo --all)</span>
+            </label>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <button type="button" class="legacy-btn primary" id="btnStartConvert" style="min-width: 260px;"
+              data-i18n="btn-start-convert">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Iniciar Conversión 3DS
+            </button>
           </div>
         </div>
 
