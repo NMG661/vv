@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="meta-desc"
+    content="OptiCraft Heritage — Web tool to convert, flip, and preview skins for Nintendo 3DS.">
+  <title>OptiCraft Heritage — 3DS Skin Converter</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/skin-tool.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="js/qrcode.min.js"></script>
+</head>
+
+<body>
+  <div class="screen">
+    <div class="panorama" aria-hidden="true">
+      <div class="panorama-track">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+        <img src="images/TU12_Panorama_Background_S.png" alt="">
+      </div>
+    </div>
+    <div class="panorama-shade" aria-hidden="true"></div>
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <div class="nav-buttons-group">
+        <a class="nav-back-btn" href="index.html" id="btn-back-portal">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="back-portal">BACK TO PORTAL</span>
+        </a>
+        <a class="nav-back-btn accent-pak" href="pak-tool.html" id="btn-goto-pak">
+          <i class="fa-solid fa-box-archive"></i>
+          <span data-i18n="goto-pak-tool">ASSETS.PAK TOOL</span>
+        </a>
+        <a class="nav-back-btn accent-och" href="ochpack-tool.html" id="btn-goto-ochpack">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span data-i18n="goto-ochpack-tool">OCHPACK (PS2)</span>
+        </a>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" title="English" aria-label="English">
+          <img class="lang-flag" src="images/flag-us.png" alt="English">
+        </button>
+        <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">
+          <img class="lang-flag" src="images/flag-ar.png" alt="Español">
+        </button>
+      </div>
+    </header>
+
+    <main class="tool-container">
+      <div class="tool-header">
+        <div class="ctr-badge-header">Nintendo 3DS Edition</div>
+        <h1 class="tool-title" data-i18n="tool-title">3DS SKIN CONVERTER</h1>
+        <p class="tool-subtitle" data-i18n="tool-subtitle">Convert modern Minecraft skins (64x64) to retro format (64x32), flip for Nintendo 3DS hardware, and preview live.</p>
+      </div>
+
+      <section class="legacy-panel">
+        <!-- Step Wizard Progress Bar -->
+        <nav class="wizard-steps-bar" role="navigation" aria-label="Wizard Steps">
+          <div class="step-indicator active" data-step="1">
+            <span class="step-num">1</span>
+            <div class="step-label">
+              <span class="step-title" data-i18n="step-1-title">Load Skin</span>
+              <span class="step-desc" data-i18n="step-1-desc">Upload PNG or choose sample</span>
+            </div>
+          </div>
+          <div class="step-arrow">➔</div>
+          <div class="step-indicator" data-step="2">
+            <span class="step-num">2</span>
+            <div class="step-label">
+              <span class="step-title" data-i18n="step-2-title">3DS Settings</span>
+              <span class="step-desc" data-i18n="step-2-desc">Presets & conversion options</span>
+            </div>
+          </div>
+          <div class="step-arrow">➔</div>
+          <div class="step-indicator" data-step="3">
+            <span class="step-num">3</span>
+            <div class="step-label">
+              <span class="step-title" data-i18n="step-3-title">Preview & Download</span>
+              <span class="step-desc" data-i18n="step-3-desc">Verify avatar and save file</span>
+            </div>
+          </div>
+        </nav>
+
+        <!-- STEP 1: Upload / Load Skin -->
+        <div class="wizard-pane active" data-pane="1" id="paneStep1">
+          <div class="info-card">
+            <p><strong>Nintendo 3DS (OptiCraft Heritage):</strong> <span data-i18n="info-step-1">Nintendo 3DS uses classic 64x32 skins and requires textures to be flipped vertically due to the console's GPU row order.</span></p>
+          </div>
+
+          <!-- Hidden file input -->
+          <input type="file" id="skinFileInput" accept="image/png,image/jpeg,image/webp" style="display:none">
+
+          <!-- Dropzone -->
+          <div class="dropzone-box" id="dropzoneBox">
+            <div class="dropzone-icon">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+            <div class="dropzone-title" data-i18n="dropzone-title">Drag & drop your skin (.PNG) here, or click to browse</div>
+            <div class="dropzone-sub" data-i18n="dropzone-sub">Supports both modern 64x64 (Minecraft 1.8+) and classic 64x32 skins</div>
+            <div class="dropzone-actions">
+              <button class="legacy-btn primary" type="button" id="btnBrowseFile">
+                <i class="fa-solid fa-folder-open"></i>
+                <span data-i18n="btn-browse-file">Browse Skin File</span>
+              </button>
+              <button class="legacy-btn secondary" type="button" id="btnPasteClipboard">
+                <i class="fa-solid fa-paste"></i>
+                <span data-i18n="btn-paste-clipboard">Paste from Clipboard</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sample skins row -->
+          <div class="sample-skins-section">
+            <div class="sample-title" data-i18n="sample-skins-title">Or test with a sample skin:</div>
+            <div class="sample-chips">
+              <button class="sample-chip" type="button" id="sampleSteveModern">
+                <i class="fa-solid fa-user"></i>
+                <span data-i18n="sample-steve-modern">Steve (64x64)</span>
+              </button>
+              <button class="sample-chip" type="button" id="sampleAlexModern">
+                <i class="fa-solid fa-user-astronaut"></i>
+                <span data-i18n="sample-alex-modern">Alex (64x64)</span>
+              </button>
+              <button class="sample-chip" type="button" id="sampleSteveClassic">
+                <i class="fa-solid fa-cube"></i>
+                <span data-i18n="sample-steve-classic">Classic Steve (64x32)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Loaded Skin Card (Appears after choosing or dropping a file) -->
+          <div class="loaded-skin-card" id="loadedSkinCard">
+            <div class="skin-thumbnail-box">
+              <canvas id="skinThumbnailCanvas"></canvas>
+            </div>
+            <div class="skin-meta-details">
+              <div class="skin-meta-name" id="skinMetaName">skin.png</div>
+              <div class="skin-meta-specs" id="skinMetaSpecs">64 x 64 px</div>
+              <span class="badge-tag" id="skinMetaBadge" data-i18n="detected-64x64">Format: 64x64 (Modern 1.8+)</span>
+            </div>
+            <div class="loaded-skin-actions">
+              <button class="legacy-btn primary" type="button" id="btnQuickConvert">
+                <i class="fa-solid fa-bolt"></i>
+                <span data-i18n="btn-quick-convert">⚡ 1-Click Convert for 3DS ➔</span>
+              </button>
+              <button class="legacy-btn" type="button" id="btnNextOptions">
+                <i class="fa-solid fa-sliders"></i>
+                <span data-i18n="btn-next-options">Customize Options ➔</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Presets & Conversion Settings -->
+        <div class="wizard-pane" data-pane="2" id="paneStep2">
+          <div class="info-card">
+            <p data-i18n="info-step-2">Select a quick preset or adjust conversion flags. The recommended 3DS preset configures everything automatically.</p>
+          </div>
+
+          <!-- Presets Grid -->
+          <div class="presets-grid">
+            <div class="preset-card active" data-preset="recommended">
+              <span class="preset-badge">OPTIMAL</span>
+              <div class="preset-title" data-i18n="preset-rec-title">⭐ Recommended for 3DS</div>
+              <div class="preset-desc" data-i18n="preset-rec-desc">Converts 64x64 to 64x32, flips vertically for 3DS, fixes hat bug, and sets base opacity.</div>
+            </div>
+
+            <div class="preset-card" data-preset="flip-only">
+              <div class="preset-title" data-i18n="preset-flip-title">🔄 Flip Only (3DS)</div>
+              <div class="preset-desc" data-i18n="preset-flip-desc">Keep resolution as-is and only flip vertically (if your skin is already 64x32).</div>
+            </div>
+
+            <div class="preset-card" data-preset="retro-only">
+              <div class="preset-title" data-i18n="preset-retro-title">📦 64x64 to 64x32 (Universal)</div>
+              <div class="preset-desc" data-i18n="preset-retro-desc">Converts to classic 64x32 without flipping vertically (for PC or Java).</div>
+            </div>
+
+            <div class="preset-card" data-preset="custom">
+              <div class="preset-title" data-i18n="preset-custom-title">🛠️ Custom Settings</div>
+              <div class="preset-desc" data-i18n="preset-custom-desc">Manually control every conversion switch below.</div>
+            </div>
+          </div>
+
+          <!-- Detailed Checkboxes -->
+          <div class="settings-list-card">
+            <div class="settings-list-title" data-i18n="settings-title">Conversion Flags</div>
+
+            <div class="setting-row">
+              <input type="checkbox" id="optConvertRetro" class="setting-checkbox" checked>
+              <div class="setting-info">
+                <label for="optConvertRetro" class="setting-label" data-i18n="opt-convert-retro">Convert 64x64 to 64x32 (Minecraft 1.2.5)</label>
+                <div class="setting-help" data-i18n="opt-convert-retro-help">Merges jacket, sleeves, and pants 2nd layers onto base limbs so no details are lost.</div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <input type="checkbox" id="optFlipVertical" class="setting-checkbox" checked>
+              <div class="setting-info">
+                <label for="optFlipVertical" class="setting-label" data-i18n="opt-flip-vertical">Flip Vertically (Upside-down for 3DS)</label>
+                <div class="setting-help" data-i18n="opt-flip-vertical-help">Required by Nintendo 3DS PICA200 GPU sampling order. Otherwise, your skin will look upside down in-game.</div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <input type="checkbox" id="optFixTransparency" class="setting-checkbox" checked>
+              <div class="setting-info">
+                <label for="optFixTransparency" class="setting-label" data-i18n="opt-fix-transparency">Fix Solid Hat Bug (Translucency sanitization)</label>
+                <div class="setting-help" data-i18n="opt-fix-transparency-help">Removes the classic black solid helmet box bug found in older skins.</div>
+              </div>
+            </div>
+
+            <div class="setting-row">
+              <input type="checkbox" id="optForceOpaque" class="setting-checkbox" checked>
+              <div class="setting-info">
+                <label for="optForceOpaque" class="setting-label" data-i18n="opt-force-opaque">Force Base Opacity</label>
+                <div class="setting-help" data-i18n="opt-force-opaque-help">Ensures head base, torso, arms, and legs are completely opaque as required by MC 1.2.5.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filename Row -->
+          <div class="filename-card">
+            <label for="customFilenameInput" class="filename-label" data-i18n="filename-label">Saved File Name:</label>
+            <div class="filename-input-wrap">
+              <input type="text" id="customFilenameInput" class="filename-input" value="skin_3ds">
+              <span class="filename-ext">.png</span>
+            </div>
+            <div class="setting-help" style="width: 100%;" data-i18n="filename-help">Avoid spaces or special characters for optimal console compatibility.</div>
+          </div>
+
+          <!-- Navigation actions -->
+          <div class="wizard-nav-actions">
+            <button class="legacy-btn" type="button" id="btnBackStep1">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span data-i18n="btn-back-step-1">⬅ Back to Upload</span>
+            </button>
+            <button class="legacy-btn primary large" type="button" id="btnGotoStep3">
+              <i class="fa-solid fa-eye"></i>
+              <span data-i18n="btn-goto-step-3">Preview & Download ➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Preview, Texture & Download -->
+        <div class="wizard-pane" data-pane="3" id="paneStep3">
+          <div class="preview-grid">
+            <!-- 2D Character Avatar Preview -->
+            <div class="avatar-preview-card">
+              <div class="avatar-preview-title" data-i18n="avatar-preview-title">Character 2D Preview (Right-side up)</div>
+              <div class="avatar-stage">
+                <canvas id="avatarCanvas" class="avatar-canvas" width="128" height="256"></canvas>
+              </div>
+              <div class="avatar-controls">
+                <button class="avatar-control-btn active" type="button" id="btnToggleHat">
+                  <i class="fa-solid fa-hat-cowboy"></i>
+                  <span data-i18n="btn-toggle-hat">Toggle Hat / Helmet</span>
+                </button>
+                <button class="avatar-control-btn" type="button" id="btnToggleArms">
+                  <i class="fa-solid fa-person"></i>
+                  <span data-i18n="btn-toggle-arms">Arm Style: Steve (4px)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Texture Comparison -->
+            <div class="texture-sheets-card">
+              <div>
+                <div class="texture-card-header">
+                  <div class="texture-card-title" data-i18n="texture-card-title">Texture Comparison</div>
+                  <button class="texture-toggle-view" type="button" id="btnToggleTextureView" data-i18n="texture-btn-view">
+                    Alternar Textura Normal / Volteada
+                  </button>
+                </div>
+
+                <div class="texture-comparison-wrap">
+                  <div class="texture-box">
+                    <span class="texture-box-label" data-i18n="texture-label-orig">Original Skin Texture</span>
+                    <div class="texture-canvas-frame">
+                      <canvas id="originalTextureCanvas"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="texture-box">
+                    <span class="texture-box-label" data-i18n="texture-label-3ds">Final 3DS Texture (SD Ready)</span>
+                    <div class="texture-canvas-frame">
+                      <canvas id="convertedTextureCanvas"></canvas>
+                    </div>
+                    <span class="texture-specs-pill" id="convertedSpecsPill">64 x 32 px (Volteada / Flipped)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Download Action Inside -->
+              <div class="download-action-card">
+                <div class="download-action-title" data-i18n="download-action-title">Skin Converted & Ready for Nintendo 3DS!</div>
+                <div class="download-action-sub" data-i18n="download-action-sub">Ready to be copied to your Nintendo 3DS SD card.</div>
+                <button class="legacy-btn primary large" type="button" id="btnDownloadSkin">
+                  <i class="fa-solid fa-download"></i>
+                  <span data-i18n="btn-download-skin">📥 DOWNLOAD 3DS SKIN (.PNG)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SD Card Installation Guide -->
+          <div class="sd-guide-card">
+            <div class="sd-guide-header">
+              <i class="fa-solid fa-sd-card"></i>
+              <div class="sd-guide-title" data-i18n="sd-guide-title">How to Install on Nintendo 3DS</div>
+            </div>
+
+            <div class="sd-path-box">
+              <div>
+                <span style="font-size: 11px; color: #aaa; display:block;" data-i18n="sd-path-label">SD Card Destination Folder:</span>
+                <span class="sd-path-text">/opticraft/.minecraft/skins/</span>
+              </div>
+              <button class="copy-btn" type="button" id="btnCopySdPath">
+                <i class="fa-solid fa-copy"></i>
+                <span data-i18n="btn-copy-path">Copy Path</span>
+              </button>
+            </div>
+
+            <ol class="sd-steps-list">
+              <li data-i18n="sd-step-1">Connect your 3DS SD card to your computer or phone (via card reader or FTPD).</li>
+              <li data-i18n="sd-step-2">Copy the downloaded <strong>.png</strong> file directly into: <code>/opticraft/.minecraft/skins/</code> (or <code>/opticraft/skins/</code>).</li>
+              <li data-i18n="sd-step-3">Open OptiCraft on your 3DS, head to <strong>Options > Skins</strong>, select your skin, and enjoy!</li>
+            </ol>
+          </div>
+
+          <!-- 3DS Camera QR Code Generator -->
+          <div class="qr-card-section">
+            <div class="qr-header">
+              <i class="fa-solid fa-qrcode"></i>
+              <div class="qr-title" data-i18n="qr-section-title">Have a direct image link? Scan with 3DS Camera</div>
+            </div>
+            <div class="qr-desc" data-i18n="qr-section-desc">
+              OptiCraft 3DS features a built-in 'QR Download' option in the skins menu! If you host your skin online (e.g. Imgur, GitHub, Discord), enter the direct URL here to generate a scannable QR code:
+            </div>
+            <div class="qr-input-row">
+              <input type="url" id="qrUrlInput" class="qr-input" placeholder="https://example.com/myskin.png" data-i18n-ph="qr-input-placeholder">
+              <button class="legacy-btn secondary" type="button" id="btnGenerateQR">
+                <i class="fa-solid fa-qrcode"></i>
+                <span data-i18n="btn-generate-qr">Generate QR</span>
+              </button>
+            </div>
+            <div class="qr-display-box" id="qrDisplayBox">
+              <div id="qrcodeContainer"></div>
+              <div class="qr-tip-text" data-i18n="qr-tip">Open OptiCraft on 3DS > Skins > QR Download and point your back camera at the screen.</div>
+            </div>
+          </div>
+
+          <!-- Bottom Actions -->
+          <div class="wizard-nav-actions">
+            <button class="legacy-btn" type="button" id="btnBackToStep2">
+              <i class="fa-solid fa-sliders"></i>
+              <span data-i18n="btn-next-options">Modify Options</span>
+            </button>
+            <button class="legacy-btn secondary" type="button" id="btnConvertAnother">
+              <i class="fa-solid fa-rotate-left"></i>
+              <span data-i18n="btn-convert-another">🔄 Convert Another Skin</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/skin-tool.js"></script>
+</body>
+
+</html>

@@ -57,7 +57,8 @@ function downloadBlob(blob, filename) {
 const translations = {
   en: {
     "back-portal": "BACK TO PORTAL",
-    "goto-ochpack": "OCHPACK CREATOR (PS2)",
+    "goto-ochpack": "OCHPACK (PS2)",
+    "goto-skin-tool": "SKIN CONVERTER (3DS)",
     "tool-title": "OPTICRAFT HERITAGE - ASSETS.PAK TOOL",
     "tool-subtitle": "Resource Packer & Unpacker for PS2, PSP, Wii and PC",
     "tab-pack": "📦 Pack to .pak",
@@ -96,7 +97,8 @@ const translations = {
   },
   es: {
     "back-portal": "VOLVER AL PORTAL",
-    "goto-ochpack": "CREADOR OCHPACK (PS2)",
+    "goto-ochpack": "OCHPACK (PS2)",
+    "goto-skin-tool": "CONVERTIDOR SKINS (3DS)",
     "tool-title": "OPTICRAFT HERITAGE - GESTOR DE ASSETS.PAK",
     "tool-subtitle": "Empaquetador y Desempaquetador de recursos para PS2, PSP, Wii y PC",
     "tab-pack": "📦 Empaquetar a .pak",
